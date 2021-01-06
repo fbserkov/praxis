@@ -1,3 +1,26 @@
 # Kent Beck
 # Test-driven development by example
 # Section I: Money example
+
+import unittest
+
+
+class Dollar:
+    def __init__(self, amount):
+        pass
+
+    def times(self, multiplier):
+        pass
+
+    amount = 10
+
+
+class TestMoney(unittest.TestCase):
+    def test_multiplication(self):
+        five = Dollar(5)
+        five.times(2)
+        self.assertEqual(10, five.amount)
+
+
+if __name__ == '__main__':
+    unittest.main()
