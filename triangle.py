@@ -1,5 +1,6 @@
 # Kent Beck
 # Test-driven development by example
+# Section III: Patterns
 # Mastering TDD
 # How much feedback do you need?
 
