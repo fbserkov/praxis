@@ -7,19 +7,17 @@ import unittest
 
 class Dollar:
     def __init__(self, amount):
-        pass
+        self.amount = amount
 
     def times(self, multiplier):
-        pass
-
-    amount = 10
+        self.amount *= multiplier
 
 
 class TestMoney(unittest.TestCase):
     def test_multiplication(self):
         five = Dollar(5)
         five.times(2)
-        self.assertEqual(10, five.amount)
+        self.assertEqual(5 * 2, five.amount)
 
 
 if __name__ == '__main__':
