@@ -9,13 +9,13 @@ import unittest
 
 class TestTriangle(unittest.TestCase):
     def test_equilateral(self):
-        self.assertEqual(self.evaluate(2, 2, 2), 1)
+        self.assertEqual(1, self.evaluate(2, 2, 2))
 
     def test_isosceles(self):
-        self.assertEqual(self.evaluate(1, 2, 2), 2)
+        self.assertEqual(2, self.evaluate(1, 2, 2))
 
     def test_scalene(self):
-        self.assertEqual(self.evaluate(2, 3, 4), 3)
+        self.assertEqual(3, self.evaluate(2, 3, 4))
 
     def test_irrational(self):
         with self.assertRaises(Exception):

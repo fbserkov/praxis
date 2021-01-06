@@ -17,7 +17,7 @@ class TestFibonacci(unittest.TestCase):
     def test_fibonacci(self):
         cases = (0, 0), (1, 1), (2, 1), (3, 2)
         for n, res in cases:
-            self.assertEqual(fib(n), res)
+            self.assertEqual(res, fib(n))
 
 
 if __name__ == '__main__':
