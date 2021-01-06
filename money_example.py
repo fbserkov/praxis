@@ -18,6 +18,8 @@ class MoneyTest(unittest.TestCase):
         five = Dollar(5)
         five.times(2)
         self.assertEqual(5 * 2, five.amount)
+        five.times(3)
+        self.assertEqual(5 * 3, five.amount)
 
 
 if __name__ == '__main__':
