@@ -1,6 +1,6 @@
 # Kent Beck
 # Test-driven development by example
-# Appendix I
+# Appendix I: Fibonacci
 
 import unittest
 
