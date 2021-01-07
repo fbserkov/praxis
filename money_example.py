@@ -27,6 +27,9 @@ class Money(Expression):
         #     return Money(self._amount + addend, self._currency)
         # return Money(addend.plus(self._amount), self._currency)
 
+    def reduce(self, to):
+        return self
+
     @staticmethod
     def dollar(amount):
         return Money(amount, 'USD')
@@ -49,6 +52,4 @@ class Sum(Expression):
 class Bank:
     @staticmethod
     def reduce(source, to):
-        if type(source) == Money:
-            return source
         return source.reduce(to)
