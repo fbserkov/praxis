@@ -17,14 +17,19 @@ class Dollar:
 
 
 class MoneyTest(unittest.TestCase):
-    def test_multiplication(self):
+    def test_equality(self):
+        self.assertTrue(Dollar(5) == Dollar(5))
+        self.assertFalse(Dollar(5) == Dollar(6))
+
+    def test_dollar_multiplication(self):
         five = Dollar(5)
         self.assertEqual(Dollar(5 * 2), five.times(2))
         self.assertEqual(Dollar(5 * 3), five.times(3))
 
-    def test_equality(self):
-        self.assertTrue(Dollar(5) == Dollar(5))
-        self.assertFalse(Dollar(5) == Dollar(6))
+    def test_franc_multiplication(self):
+        five = Franc(5)
+        self.assertEqual(Franc(5 * 2), five.times(2))
+        self.assertEqual(Franc(5 * 3), five.times(3))
 
 
 if __name__ == '__main__':
