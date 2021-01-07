@@ -3,7 +3,7 @@
 # Section I: Money example
 
 import unittest
-from money_example import Bank, Money
+from money_example import Bank, Money, Sum
 
 
 class MoneyExampleTest(unittest.TestCase):
@@ -23,9 +23,9 @@ class MoneyExampleTest(unittest.TestCase):
 
     def test_simple_addition(self):
         five = Money.dollar(5)
-        result = five.plus(five)
+        sum_obj = five.plus(five)
         bank = Bank()
-        reduced = bank.reduce(result, 'USD')
+        reduced = bank.reduce(sum_obj, 'USD')
         self.assertEqual(Money.dollar(5 + 5), reduced)
 
     def test_plus_returns_sum(self):
@@ -33,6 +33,12 @@ class MoneyExampleTest(unittest.TestCase):
         sum_obj = five.plus(five)
         self.assertEqual(five, sum_obj._augend)  # TODO
         self.assertEqual(five, sum_obj._addend)  # TODO
+
+    def test_reduce_sum(self):
+        sum_obj = Sum(Money.dollar(3), Money.dollar(4))
+        bank = Bank()
+        result = bank.reduce(sum_obj, 'USD')
+        self.assertEqual(Money.dollar(3 + 4), result)
 
 
 if __name__ == '__main__':
