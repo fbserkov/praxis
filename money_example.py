@@ -36,7 +36,7 @@ class Dollar(Money):
         Money.__init__(self, amount, currency)
 
     def times(self, multiplier):
-        return Money(self._amount * multiplier, self._currency)
+        return Dollar(self._amount * multiplier, self._currency)
 
 
 class Franc(Money):
@@ -44,7 +44,7 @@ class Franc(Money):
         Money.__init__(self, amount, currency)
 
     def times(self, multiplier):
-        return Money(self._amount * multiplier, self._currency)
+        return Franc(self._amount * multiplier, self._currency)
 
 
 class MoneyTest(unittest.TestCase):
@@ -54,6 +54,9 @@ class MoneyTest(unittest.TestCase):
         self.assertTrue(Money.franc(5) == Money.franc(5))
         self.assertFalse(Money.franc(5) == Money.franc(6))
         self.assertFalse(Money.dollar(5) == Money.franc(5))
+
+    def test_different_class_equality(self):
+        self.assertTrue(Money(10, 'CHF') == Franc(10, 'CHF'))
 
     def test_dollar_multiplication(self):
         five = Money.dollar(5)
