@@ -5,7 +5,11 @@
 import unittest
 
 
-class Money:
+class Expression:
+    pass
+
+
+class Money(Expression):
     def __init__(self, amount, currency):
         self._amount = amount
         self._currency = currency
@@ -38,7 +42,13 @@ class Money:
         return Money(amount, 'CHF')
 
 
-class MoneyTest(unittest.TestCase):
+class Bank:
+    @staticmethod
+    def reduce(source, to):
+        return Money.dollar(5 + 5)
+
+
+class MoneyExampleTest(unittest.TestCase):
     def test_currency(self):
         self.assertEqual('USD', Money.dollar(1).currency())
         self.assertEqual('CHF', Money.franc(1).currency())
@@ -54,8 +64,11 @@ class MoneyTest(unittest.TestCase):
         self.assertEqual(Money.dollar(5 * 3), five.times(3))
 
     def test_simple_addition(self):
-        result = Money.dollar(5).plus(Money.dollar(5))
-        self.assertEqual(Money.dollar(5 + 5), result)
+        five = Money.dollar(5)
+        result = five.plus(five)
+        bank = Bank()
+        reduced = bank.reduce(result, 'USD')
+        self.assertEqual(Money.dollar(5 + 5), reduced)
 
 
 if __name__ == '__main__':
