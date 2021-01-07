@@ -28,6 +28,10 @@ class Dollar(Money):
     def __init__(self, amount):
         Money.__init__(self, amount)
 
+    @staticmethod
+    def currency():
+        return 'USD'
+
     def times(self, multiplier):
         return Dollar(self._amount * multiplier)
 
@@ -35,6 +39,10 @@ class Dollar(Money):
 class Franc(Money):
     def __init__(self, amount):
         Money.__init__(self, amount)
+
+    @staticmethod
+    def currency():
+        return 'CHF'
 
     def times(self, multiplier):
         return Franc(self._amount * multiplier)
@@ -57,6 +65,10 @@ class MoneyTest(unittest.TestCase):
         five = Money.franc(5)
         self.assertEqual(Money.franc(5 * 2), five.times(2))
         self.assertEqual(Money.franc(5 * 3), five.times(3))
+
+    def test_currency(self):
+        self.assertEqual('USD', Money.dollar(1).currency())
+        self.assertEqual('CHF', Money.franc(1).currency())
 
 
 if __name__ == '__main__':
