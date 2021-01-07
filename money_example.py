@@ -2,6 +2,12 @@ class Expression:
     pass
 
 
+class Sum(Expression):
+    def __init__(self, augend, addend):
+        self._augend = augend
+        self._addend = addend
+
+
 class Money(Expression):
     def __init__(self, amount, currency):
         self._amount = amount
@@ -22,9 +28,10 @@ class Money(Expression):
         return Money(self._amount * multiplier, self._currency)
 
     def plus(self, addend):
-        if type(addend) == int:
-            return Money(self._amount + addend, self._currency)
-        return Money(addend.plus(self._amount), self._currency)
+        return Sum(self, addend)
+        # if type(addend) == int:  # TODO
+        #     return Money(self._amount + addend, self._currency)
+        # return Money(addend.plus(self._amount), self._currency)
 
     @staticmethod
     def dollar(amount):

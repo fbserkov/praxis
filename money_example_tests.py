@@ -31,8 +31,8 @@ class MoneyExampleTest(unittest.TestCase):
     def test_plus_returns_sum(self):
         five = Money.dollar(5)
         sum_obj = five.plus(five)
-        self.assertEqual(five, sum_obj.augend)
-        self.assertEqual(five, sum_obj.addend)
+        self.assertEqual(five, sum_obj._augend)  # TODO
+        self.assertEqual(five, sum_obj._addend)  # TODO
 
 
 if __name__ == '__main__':
