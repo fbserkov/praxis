@@ -17,7 +17,10 @@ class Money:
         if type(other) == int:
             return self._amount == other
         else:
-            return self._amount == other and type(self) == type(other)
+            return (
+                self._amount == other and
+                self.currency() == other.currency()
+            )
 
     def currency(self):
         return self._currency
@@ -36,7 +39,7 @@ class Dollar(Money):
         Money.__init__(self, amount, currency)
 
     def times(self, multiplier):
-        return Dollar(self._amount * multiplier, self._currency)
+        return Money(self._amount * multiplier, self._currency)
 
 
 class Franc(Money):
@@ -44,7 +47,7 @@ class Franc(Money):
         Money.__init__(self, amount, currency)
 
     def times(self, multiplier):
-        return Franc(self._amount * multiplier, self._currency)
+        return Money(self._amount * multiplier, self._currency)
 
 
 class MoneyTest(unittest.TestCase):
