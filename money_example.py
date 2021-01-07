@@ -23,7 +23,7 @@ class Money(Expression):
 
     def plus(self, addend):
         return Sum(self, addend)
-        # if type(addend) == int:  # TODO
+        # if type(addend) == int:
         #     return Money(self._amount + addend, self._currency)
         # return Money(addend.plus(self._amount), self._currency)
 
@@ -42,11 +42,13 @@ class Sum(Expression):
         self._addend = addend
 
     def reduce(self, to):
-        amount = self._augend._amount + self._addend._amount  # TODO
+        amount = self._augend._amount + self._addend._amount
         return Money.dollar(amount)
 
 
 class Bank:
     @staticmethod
     def reduce(source, to):
+        if type(source) == Money:
+            return source
         return source.reduce(to)
