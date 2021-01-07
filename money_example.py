@@ -19,6 +19,10 @@ class Money:
     def dollar(amount):
         return Dollar(amount)
 
+    @staticmethod
+    def franc(amount):
+        return Franc(amount)
+
 
 class Dollar(Money):
     def __init__(self, amount):
@@ -40,19 +44,19 @@ class MoneyTest(unittest.TestCase):
     def test_equality(self):
         self.assertTrue(Money.dollar(5) == Money.dollar(5))
         self.assertFalse(Money.dollar(5) == Money.dollar(6))
-        self.assertTrue(Franc(5) == Franc(5))
-        self.assertFalse(Franc(5) == Franc(6))
-        self.assertFalse(Money.dollar(5) == Franc(5))
+        self.assertTrue(Money.franc(5) == Money.franc(5))
+        self.assertFalse(Money.franc(5) == Money.franc(6))
+        self.assertFalse(Money.dollar(5) == Money.franc(5))
 
-    def test_multiplication(self):
+    def test_dollar_multiplication(self):
         five = Money.dollar(5)
         self.assertEqual(Money.dollar(5 * 2), five.times(2))
         self.assertEqual(Money.dollar(5 * 3), five.times(3))
 
     def test_franc_multiplication(self):
-        five = Franc(5)
-        self.assertEqual(Franc(5 * 2), five.times(2))
-        self.assertEqual(Franc(5 * 3), five.times(3))
+        five = Money.franc(5)
+        self.assertEqual(Money.franc(5 * 2), five.times(2))
+        self.assertEqual(Money.franc(5 * 3), five.times(3))
 
 
 if __name__ == '__main__':
