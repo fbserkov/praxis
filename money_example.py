@@ -2,16 +2,6 @@ class Expression:
     pass
 
 
-class Sum(Expression):
-    def __init__(self, augend, addend):
-        self._augend = augend
-        self._addend = addend
-
-    def reduce(self, to):
-        amount = self._augend._amount + self._addend._amount  # TODO
-        return Money.dollar(amount)
-
-
 class Money(Expression):
     def __init__(self, amount, currency):
         self._amount = amount
@@ -44,6 +34,16 @@ class Money(Expression):
     @staticmethod
     def franc(amount):
         return Money(amount, 'CHF')
+
+
+class Sum(Expression):
+    def __init__(self, augend, addend):
+        self._augend = augend
+        self._addend = addend
+
+    def reduce(self, to):
+        amount = self._augend._amount + self._addend._amount  # TODO
+        return Money.dollar(amount)
 
 
 class Bank:
