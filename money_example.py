@@ -27,10 +27,10 @@ class Money:
 class Dollar(Money):
     def __init__(self, amount):
         Money.__init__(self, amount)
+        self._currency = 'USD'
 
-    @staticmethod
-    def currency():
-        return 'USD'
+    def currency(self):
+        return self._currency
 
     def times(self, multiplier):
         return Dollar(self._amount * multiplier)
@@ -39,10 +39,10 @@ class Dollar(Money):
 class Franc(Money):
     def __init__(self, amount):
         Money.__init__(self, amount)
+        self._currency = 'CHF'
 
-    @staticmethod
-    def currency():
-        return 'CHF'
+    def currency(self):
+        return self._currency
 
     def times(self, multiplier):
         return Franc(self._amount * multiplier)
