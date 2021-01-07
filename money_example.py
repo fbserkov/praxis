@@ -10,7 +10,10 @@ class Money:
         self._amount = amount
 
     def __eq__(self, other):
-        return self._amount == other
+        if type(other) == int:
+            return self._amount == other
+        else:
+            return self._amount == other and type(self) == type(other)
 
 
 class Dollar(Money):
@@ -35,6 +38,7 @@ class MoneyTest(unittest.TestCase):
         self.assertFalse(Dollar(5) == Dollar(6))
         self.assertTrue(Franc(5) == Franc(5))
         self.assertFalse(Franc(5) == Franc(6))
+        self.assertFalse(Dollar(5) == Franc(5))
 
     def test_dollar_multiplication(self):
         five = Dollar(5)
