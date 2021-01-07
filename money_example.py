@@ -19,10 +19,8 @@ class Dollar:
 class MoneyTest(unittest.TestCase):
     def test_multiplication(self):
         five = Dollar(5)
-        product = five.times(2)
-        self.assertEqual(5 * 2, product.amount)
-        product = five.times(3)
-        self.assertEqual(5 * 3, product.amount)
+        self.assertEqual(5 * 2, five.times(2).amount)
+        self.assertEqual(5 * 3, five.times(3).amount)
 
     def test_equality(self):
         self.assertTrue(Dollar(5).equals(Dollar(5)))
