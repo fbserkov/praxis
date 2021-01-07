@@ -15,13 +15,16 @@ class Money:
         else:
             return self._amount == other and type(self) == type(other)
 
+    def currency(self):
+        return self._currency
+
     @staticmethod
     def dollar(amount):
         return Dollar(amount)
 
     @staticmethod
     def franc(amount):
-        return Franc(amount)
+        return Franc(amount, 'CHF')
 
 
 class Dollar(Money):
@@ -29,23 +32,17 @@ class Dollar(Money):
         Money.__init__(self, amount)
         self._currency = 'USD'
 
-    def currency(self):
-        return self._currency
-
     def times(self, multiplier):
         return Dollar(self._amount * multiplier)
 
 
 class Franc(Money):
-    def __init__(self, amount):
+    def __init__(self, amount, currency):
         Money.__init__(self, amount)
-        self._currency = 'CHF'
-
-    def currency(self):
-        return self._currency
+        self._currency = currency
 
     def times(self, multiplier):
-        return Franc(self._amount * multiplier)
+        return Money.franc(self._amount * multiplier)
 
 
 class MoneyTest(unittest.TestCase):
