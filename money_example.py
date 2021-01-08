@@ -49,12 +49,14 @@ class Sum(Expression):
 
 
 class Bank:
-    def reduce(self, source, to):
-        return source.reduce(self, to)
+    rates = {}
 
     @staticmethod
     def rate(from_currency, to_currency):
         return 2 if from_currency == 'CHF' and to_currency == 'USD' else 1
+
+    def reduce(self, source, to):
+        return source.reduce(self, to)
 
 
 class Pair:
