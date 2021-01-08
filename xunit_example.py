@@ -30,13 +30,9 @@ class TestCaseTest(TestCase):
     def setup(self):
         self.test = WasRun('test_method')
 
-    def test_running(self):
-        self.test.run()
-
     def test_setup(self):
         self.test.run()
         assert 'setup test_method ' == self.test.log
 
 
-TestCaseTest('test_running').run()
 TestCaseTest('test_setup').run()
