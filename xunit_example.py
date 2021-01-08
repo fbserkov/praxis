@@ -6,11 +6,14 @@ class WasRun:
     def __init__(self, name):
         self.was_run = None
 
+    def run(self):
+        self.test_methode()
+
     def test_methode(self):
         self.was_run = 1
 
 
 test = WasRun('test_methode')
 print(test.was_run)
-test.test_methode()
+test.run()
 print(test.was_run)
