@@ -27,12 +27,10 @@ class WasRun(TestCase):
 
 
 class TestCaseTest(TestCase):
-    def setup(self):
+    def test_template_method(self):
         self.test = WasRun('test_method')
-
-    def test_setup(self):
         self.test.run()
         assert 'setup test_method ' == self.test.log
 
 
-TestCaseTest('test_setup').run()
+TestCaseTest('test_template_method').run()
