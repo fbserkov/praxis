@@ -16,6 +16,9 @@ class Money(Expression):
             return self._amount == other
         return self._amount == other and self.currency() == other.currency()
 
+    def amount(self):
+        return self._amount
+
     def currency(self):
         return self._currency
 
@@ -44,7 +47,10 @@ class Sum(Expression):
         self._addend = addend
 
     def reduce(self, bank, to):
-        amount = self._augend._amount + self._addend._amount
+        amount = (
+            self._augend.reduce(bank, to).amount() +
+            self._addend.reduce(bank, to).amount()
+        )
         return Money.dollar(amount)
 
 
