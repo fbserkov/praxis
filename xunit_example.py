@@ -2,6 +2,11 @@
 # Test-driven development by example
 # Section II: xUnit example
 
+class TestResult:
+    def summary(self):
+        return '1 run, 0 failed'
+
+
 class TestCase:
     def __init__(self, name):
         self._name = name
@@ -14,6 +19,7 @@ class TestCase:
         method = getattr(self, self._name)
         method()
         self.teardown()
+        return TestResult()
 
     def teardown(self):
         pass
