@@ -62,6 +62,14 @@ class MoneyExampleTest(unittest.TestCase):
         result = bank.reduce(five_bucks.plus(ten_francs), 'USD')
         self.assertEqual(Money.dollar(5 + int(10 / 2)), result)
 
+    def test_sum_plus_money(self):
+        five_bucks = Money.dollar(5)
+        ten_francs = Money.franc(10)
+        bank = Bank()
+        bank.add_rate('CHF', 'USD', 2)
+        sum_obj = Sum(five_bucks, ten_francs).plus(five_bucks)
+        result = bank.reduce(sum_obj, 'USD')
+        self.assertEqual(Money.dollar(5 + int(10 / 2) + 5), result)
 
 if __name__ == '__main__':
     unittest.main()

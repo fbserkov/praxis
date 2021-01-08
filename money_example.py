@@ -50,7 +50,7 @@ class Sum(Expression):
         self._addend = addend
 
     def plus(self, addend):
-        return None
+        return Sum(self, addend)
 
     def reduce(self, bank, to):
         amount = (
