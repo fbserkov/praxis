@@ -35,9 +35,15 @@ class WasRun(TestCase):
 
 class TestCaseTest(TestCase):
     def test_template_method(self):
-        self.test = WasRun('test_method')
-        self.test.run()
-        assert 'setup test_method teardown ' == self.test.log
+        test = WasRun('test_method')
+        test.run()
+        assert 'setup test_method teardown ' == test.log
+
+    def test_result(self):
+        test = WasRun('test_method')
+        result = test.run()
+        assert '1 run, 0 failed' == result.summary()
 
 
 TestCaseTest('test_template_method').run()
+TestCaseTest('test_result').run()
