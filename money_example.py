@@ -26,7 +26,7 @@ class Money(Expression):
         return Sum(self, addend)
 
     def reduce(self, bank, to):
-        rate = 2 if self._currency == 'CHF' and to == 'USD' else 1
+        rate = bank.rate(self._currency, to)
         return Money(self._amount / rate, to)
 
     @staticmethod
@@ -51,3 +51,7 @@ class Sum(Expression):
 class Bank:
     def reduce(self, source, to):
         return source.reduce(self, to)
+
+    @staticmethod
+    def rate(from_currency, to_currency):
+        return 2 if from_currency == 'CHF' and to_currency == 'USD' else 1
