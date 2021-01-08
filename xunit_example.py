@@ -6,15 +6,15 @@ class TestCase:
     def __init__(self, name):
         self._name = name
 
+    def run(self):
+        method = getattr(self, self._name)
+        method()
+
 
 class WasRun(TestCase):
     def __init__(self, name):
         self.was_run = None
         TestCase.__init__(self, name)
-
-    def run(self):
-        method = getattr(self, self._name)
-        method()
 
     def test_method(self):
         self.was_run = 1
