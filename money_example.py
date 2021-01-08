@@ -1,4 +1,7 @@
 class Expression:
+    def plus(self, addend):
+        pass
+
     def reduce(self, bank, to):
         pass
 
@@ -45,6 +48,9 @@ class Sum(Expression):
     def __init__(self, augend, addend):
         self._augend = augend
         self._addend = addend
+
+    def plus(self, addend):
+        return None
 
     def reduce(self, bank, to):
         amount = (
