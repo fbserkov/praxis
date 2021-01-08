@@ -2,10 +2,15 @@
 # Test-driven development by example
 # Section II: xUnit example
 
-class WasRun:
+class TestCase:
+    def __init__(self, name):
+        self._name = name
+
+
+class WasRun(TestCase):
     def __init__(self, name):
         self.was_run = None
-        self._name = name
+        TestCase.__init__(self, name)
 
     def run(self):
         method = getattr(self, self._name)
