@@ -49,11 +49,15 @@ class Sum(Expression):
 
 
 class Bank:
-    rates = {}
+    _rates = {}
+
+    @staticmethod
+    def add_rate(from_currency, to_currency, rate):
+        Bank._rates[Pair(from_currency, to_currency)] = rate
 
     @staticmethod
     def rate(from_currency, to_currency):
-        return 2 if from_currency == 'CHF' and to_currency == 'USD' else 1
+        return Bank._rates[Pair(from_currency, to_currency)]
 
     def reduce(self, source, to):
         return source.reduce(self, to)
