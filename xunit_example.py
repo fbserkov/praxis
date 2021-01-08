@@ -20,7 +20,10 @@ class WasRun(TestCase):
         self.was_run = 1
 
 
-test = WasRun('test_method')
-print(test.was_run)
-test.run()
-print(test.was_run)
+def test_running():
+    test = WasRun('test_method')
+    print(test.was_run)
+    test.run()
+    print(test.was_run)
+
+test_running()
