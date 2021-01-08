@@ -57,6 +57,8 @@ class Bank:
 
     @staticmethod
     def rate(from_currency, to_currency):
+        if from_currency == to_currency:
+            return 1
         return Bank._rates[Pair(from_currency, to_currency)]
 
     def reduce(self, source, to):
