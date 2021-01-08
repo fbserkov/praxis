@@ -20,10 +20,12 @@ class WasRun(TestCase):
         self.was_run = 1
 
 
-def test_running():
-    test = WasRun('test_method')
-    assert not test.was_run
-    test.run()
-    assert test.was_run
+class TestCaseTest(TestCase):
+    def test_running(self):
+        test = WasRun('test_method')
+        assert not test.was_run
+        test.run()
+        assert test.was_run
 
-test_running()
+
+TestCaseTest('test_running').run()
