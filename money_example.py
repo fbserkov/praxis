@@ -55,3 +55,18 @@ class Bank:
     @staticmethod
     def rate(from_currency, to_currency):
         return 2 if from_currency == 'CHF' and to_currency == 'USD' else 1
+
+
+class Pair:
+    def __init__(self, from_currency, to_currency):
+        self.from_currency = from_currency
+        self.to_currency = to_currency
+
+    def __eq__(self, other):
+        return (
+            self.from_currency == other.from_currency and
+            self.to_currency == other.to_currency
+        )
+
+    def __hash__(self):
+        return 0
