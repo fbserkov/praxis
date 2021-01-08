@@ -22,8 +22,8 @@ class WasRun(TestCase):
 
 def test_running():
     test = WasRun('test_method')
-    print(test.was_run)
+    assert not test.was_run
     test.run()
-    print(test.was_run)
+    assert test.was_run
 
 test_running()
