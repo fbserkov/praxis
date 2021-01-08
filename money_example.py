@@ -3,7 +3,7 @@ class Expression:
         pass
 
     def plus(self, addend):
-        pass
+        return Sum(self, addend)
 
     def reduce(self, bank, to):
         pass
@@ -31,9 +31,6 @@ class Money(Expression):
     def times(self, multiplier):
         return Money(self._amount * multiplier, self._currency)
 
-    def plus(self, addend):
-        return Sum(self, addend)
-
     def reduce(self, bank, to):
         rate = bank.rate(self._currency, to)
         return Money(self._amount / rate, to)
@@ -57,9 +54,6 @@ class Sum(Expression):
             self._augend.times(multiplier),
             self._addend.times(multiplier),
         )
-
-    def plus(self, addend):
-        return Sum(self, addend)
 
     def reduce(self, bank, to):
         amount = (
