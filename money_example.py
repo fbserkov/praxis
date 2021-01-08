@@ -23,12 +23,10 @@ class Money(Expression):
 
     def plus(self, addend):
         return Sum(self, addend)
-        # if type(addend) == int:
-        #     return Money(self._amount + addend, self._currency)
-        # return Money(addend.plus(self._amount), self._currency)
 
     def reduce(self, to):
-        return self
+        rate = 2 if self._currency == 'CHF' and to == 'USD' else 1
+        return Money(self._amount / rate, to)
 
     @staticmethod
     def dollar(amount):

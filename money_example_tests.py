@@ -31,8 +31,8 @@ class MoneyExampleTest(unittest.TestCase):
     def test_plus_returns_sum(self):
         five = Money.dollar(5)
         sum_obj = five.plus(five)
-        self.assertEqual(five, sum_obj._augend)  # TODO
-        self.assertEqual(five, sum_obj._addend)  # TODO
+        self.assertEqual(five, sum_obj._augend)
+        self.assertEqual(five, sum_obj._addend)
 
     def test_reduce_sum(self):
         sum_obj = Sum(Money.dollar(3), Money.dollar(4))
@@ -43,6 +43,12 @@ class MoneyExampleTest(unittest.TestCase):
     def test_reduce_money(self):
         bank = Bank()
         result = bank.reduce(Money.dollar(1), 'USD')
+        self.assertEqual(Money.dollar(1), result)
+
+    def test_reduce_money_different_currency(self):
+        bank = Bank()
+        # bank.addRate('CHF', 'USD', 2)
+        result = bank.reduce(Money.franc(2), 'USD')
         self.assertEqual(Money.dollar(1), result)
 
 
