@@ -1,4 +1,7 @@
 class Expression:
+    def times(self, multiplier):
+        pass
+
     def plus(self, addend):
         pass
 
@@ -48,6 +51,12 @@ class Sum(Expression):
     def __init__(self, augend, addend):
         self._augend = augend
         self._addend = addend
+
+    def times(self, multiplier):
+        return Sum(
+            self._augend.times(multiplier),
+            self._addend.times(multiplier),
+        )
 
     def plus(self, addend):
         return Sum(self, addend)
