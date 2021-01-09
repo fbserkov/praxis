@@ -99,11 +99,12 @@ class TestCaseTest(TestCase):
         assert '2 run, 1 failed' == result.summary()
 
 
-# print(TestCaseTest('test_template_method').run().summary())
-# print(TestCaseTest('test_result').run().summary())
-# print(TestCaseTest('test_failed_result_formatting').run().summary())
-# print(TestCaseTest('test_failed_result').run().summary())
-
+suite = TestSuite()
+# suite.add(TestCaseTest('test_template_method'))
+# suite.add(TestCaseTest('test_result'))
+# suite.add(TestCaseTest('test_failed_result_formatting'))
+# suite.add(TestCaseTest('test_failed_result'))
+suite.add(TestCaseTest('test_suite'))
 result = TestResult()
-TestCaseTest('test_suite').run(result)
+suite.run(result)
 print(result.summary())
