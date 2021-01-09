@@ -31,7 +31,7 @@ class TestCase:
         try:
             method = getattr(self, self._name)
             method()
-        except:
+        except Exception:
             result.test_failed()
         self.teardown()
         return result
