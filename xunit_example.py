@@ -31,7 +31,7 @@ class TestCase:
         try:
             method = getattr(self, self._name)
             method()
-        except Exception:
+        except:
             result.test_failed()
         self.teardown()
         return result
@@ -81,7 +81,7 @@ class TestCaseTest(TestCase):
         assert '1 run, 1 failed' == result.summary()
 
 
-TestCaseTest('test_template_method').run()
-TestCaseTest('test_result').run()
-TestCaseTest('test_failed_result_formatting').run()
-TestCaseTest('test_failed_result').run()
+print(TestCaseTest('test_template_method').run().summary())
+print(TestCaseTest('test_result').run().summary())
+print(TestCaseTest('test_failed_result_formatting').run().summary())
+print(TestCaseTest('test_failed_result').run().summary())
