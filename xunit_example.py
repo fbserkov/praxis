@@ -42,7 +42,7 @@ class TestSuite:
     def __init__(self, cls=None):
         self._tests = []
         if cls:
-            names = (name for name in dir(WasRun) if name.startswith('test_'))
+            names = (name for name in dir(cls) if name.startswith('test_'))
             for test_name in names:
                 self.add(cls(test_name))
 
@@ -120,15 +120,7 @@ class TestCaseTest(TestCase):
         assert '2 run, 1 failed' == self.result.summary()
 
 
-_suite = TestSuite()
-_suite.add(TestCaseTest('test_template_method'))
-_suite.add(TestCaseTest('test_result'))
-_suite.add(TestCaseTest('test_failed_result_formatting'))
-_suite.add(TestCaseTest('test_failed_result'))
-_suite.add(TestCaseTest('test_suite'))
-_suite.add(TestCaseTest('test_teardown'))
-_suite.add(TestCaseTest('test_failed_setup'))
-_suite.add(TestCaseTest('test_auto_suite'))
+_suite = TestSuite(TestCaseTest)
 _result = TestResult()
 _suite.run(_result)
 print(_result.summary())
