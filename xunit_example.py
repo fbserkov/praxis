@@ -110,6 +110,10 @@ class TestCaseTest(TestCase):
         test.run(self.result)
         assert '1 run, 1 failed' == self.result.summary()
 
+    def test_auto_suite(self):
+        suite = TestSuite(WasRun)
+        suite.run(self.result)
+        assert '2 run, 1 failed' == self.result.summary()
 
 
 _suite = TestSuite()
@@ -120,6 +124,7 @@ _suite.add(TestCaseTest('test_failed_result'))
 _suite.add(TestCaseTest('test_suite'))
 _suite.add(TestCaseTest('test_teardown'))
 _suite.add(TestCaseTest('test_failed_setup'))
+_suite.add(TestCaseTest('test_auto_suite'))
 _result = TestResult()
 _suite.run(_result)
 print(_result.summary())
