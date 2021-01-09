@@ -99,6 +99,12 @@ class TestCaseTest(TestCase):
         suite.run(self.result)
         assert '2 run, 1 failed' == self.result.summary()
 
+    def test_teardown(self):
+        test = WasRun('test_broken_method')
+        test.run(self.result)
+        print(test.log)
+        assert 'setup teardown ' == test.log
+
 
 _suite = TestSuite()
 _suite.add(TestCaseTest('test_template_method'))
@@ -106,6 +112,7 @@ _suite.add(TestCaseTest('test_result'))
 _suite.add(TestCaseTest('test_failed_result_formatting'))
 _suite.add(TestCaseTest('test_failed_result'))
 _suite.add(TestCaseTest('test_suite'))
+_suite.add(TestCaseTest('test_teardown'))
 _result = TestResult()
 _suite.run(_result)
 print(_result.summary())
