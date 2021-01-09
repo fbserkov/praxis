@@ -26,8 +26,8 @@ class TestCase:
 
     def run(self, result):
         result.test_started()
-        self.setup()
         try:
+            self.setup()
             method = getattr(self, self._name)
             method()
         except:
