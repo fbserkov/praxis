@@ -24,8 +24,7 @@ class TestCase:
     def setup(self):
         pass
 
-    def run(self):
-        result = TestResult()
+    def run(self, result):
         result.test_started()
         self.setup()
         try:
@@ -34,7 +33,6 @@ class TestCase:
         except:
             result.test_failed()
         self.teardown()
-        return result
 
     def teardown(self):
         pass
@@ -47,11 +45,9 @@ class TestSuite:
     def add(self, test):
         self._tests.append(test)
 
-    def run(self):
-        result = TestResult()
+    def run(self, result):
         for test in self._tests:
             test.run(result)
-        return result
 
 
 class WasRun(TestCase):
@@ -98,12 +94,16 @@ class TestCaseTest(TestCase):
         suite = TestSuite()
         suite.add(WasRun('test_method'))
         suite.add(WasRun('test_broken_method'))
-        result = suite.run()
+        result = TestResult()
+        suite.run(result)
         assert '2 run, 1 failed' == result.summary()
 
 
-print(TestCaseTest('test_template_method').run().summary())
-print(TestCaseTest('test_result').run().summary())
-print(TestCaseTest('test_failed_result_formatting').run().summary())
-print(TestCaseTest('test_failed_result').run().summary())
-print(TestCaseTest('test_suite').run().summary())
+# print(TestCaseTest('test_template_method').run().summary())
+# print(TestCaseTest('test_result').run().summary())
+# print(TestCaseTest('test_failed_result_formatting').run().summary())
+# print(TestCaseTest('test_failed_result').run().summary())
+
+result = TestResult()
+TestCaseTest('test_suite').run(result)
+print(result.summary())
