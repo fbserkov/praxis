@@ -39,8 +39,12 @@ class TestCase:
 
 
 class TestSuite:
-    def __init__(self):
+    def __init__(self, cls=None):
         self._tests = []
+        if cls:
+            names = (name for name in dir(WasRun) if name.startswith('test_'))
+            for test_name in names:
+                self.add(cls(test_name))
 
     def add(self, test):
         self._tests.append(test)
