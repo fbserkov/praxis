@@ -102,8 +102,14 @@ class TestCaseTest(TestCase):
     def test_teardown(self):
         test = WasRun('test_broken_method')
         test.run(self.result)
-        print(test.log)
         assert 'setup teardown ' == test.log
+
+    def test_failed_setup(self):
+        test = WasRun('test_method')
+        test.setup = test.test_broken_method
+        test.run(self.result)
+        assert '1 run, 1 failed' == self.result.summary()
+
 
 
 _suite = TestSuite()
@@ -113,6 +119,7 @@ _suite.add(TestCaseTest('test_failed_result_formatting'))
 _suite.add(TestCaseTest('test_failed_result'))
 _suite.add(TestCaseTest('test_suite'))
 _suite.add(TestCaseTest('test_teardown'))
+_suite.add(TestCaseTest('test_failed_setup'))
 _result = TestResult()
 _suite.run(_result)
 print(_result.summary())
