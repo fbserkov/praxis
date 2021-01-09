@@ -1,4 +1,3 @@
-# Kent Beck
 # Test-driven development by example
 # Section III: Patterns
 # Mastering TDD
