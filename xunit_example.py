@@ -40,6 +40,20 @@ class TestCase:
         pass
 
 
+class TestSuite:
+    def __init__(self):
+        self._tests = []
+
+    def add(self, test):
+        self._tests.append(test)
+
+    def run(self):
+        result = TestResult()
+        for test in self._tests:
+            test.run(result)
+        return result
+
+
 class WasRun(TestCase):
     def __init__(self, name):
         TestCase.__init__(self, name)
