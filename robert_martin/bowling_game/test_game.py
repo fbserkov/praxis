@@ -8,6 +8,12 @@ class TestGame(unittest.TestCase):
         g.add(5)
         self.assertEqual(5, g.get_score())
 
+    def test_two_throws_no_mark(self):
+        g = Game()
+        g.add(5)
+        g.add(4)
+        self.assertEqual(5 + 4, g.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
