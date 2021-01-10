@@ -1,19 +1,19 @@
 class Game:
     def __init__(self):
-        self._current_frame = 1
-        self._current_throw = 0
-        self._first_throw = True
-        self._throws = 21 * [0]
         self._score = 0
+        self._throws = 21 * [0]
+        self._current_throw = 0
+        self._current_frame = 1
+        self._first_throw_in_frame = True
 
     def adjust_current_frame(self, pins):
-        if self._first_throw:
+        if self._first_throw_in_frame:
             if pins == 10:  # strike
                 self._current_frame += 1
             else:
-                self._first_throw = False
+                self._first_throw_in_frame = False
         else:
-            self._first_throw = True
+            self._first_throw_in_frame = True
             self._current_frame += 1
         self._current_frame = min(11, self._current_frame)
 
