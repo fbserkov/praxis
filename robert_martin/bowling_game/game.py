@@ -6,15 +6,18 @@ class Game:
         self._throws = 21 * [0]
         self._score = 0
 
-    def add(self, pins):
-        self._throws[self._current_throw] = pins
-        self._current_throw += 1
-        self._score += pins
+    def adjust_current_frame(self):
         if self._first_throw:
             self._first_throw = False
             self._current_frame += 1
         else:
             self._first_throw = True
+
+    def add(self, pins):
+        self._throws[self._current_throw] = pins
+        self._current_throw += 1
+        self._score += pins
+        self.adjust_current_frame()
 
     def get_current_frame(self):
         return self._current_frame
