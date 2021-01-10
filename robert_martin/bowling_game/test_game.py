@@ -8,7 +8,6 @@ class TestGame(unittest.TestCase):
 
     def test_one_throw(self):
         self.g.add(5)
-        self.assertEqual(5, self.g.get_score())
         self.assertEqual(1, self.g.get_current_frame())
 
     def test_two_throws_no_mark(self):
