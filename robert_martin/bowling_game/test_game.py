@@ -50,6 +50,12 @@ class TestGame(unittest.TestCase):
         self.assertEqual(28, self.g.get_score())
         self.assertEqual(3, self.g.get_current_frame())
 
+    def test_perfect_game(self):
+        for _ in range(12):
+            self.g.add(10)
+        self.assertEqual(300, self.g.get_score())
+        self.assertEqual(10, self.g.get_current_frame())
+
 
 if __name__ == '__main__':
     unittest.main()
