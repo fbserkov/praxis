@@ -70,6 +70,12 @@ class TestGame(unittest.TestCase):
             self.g.add(p)
         self.assertEqual(133, self.g.get_score())
 
+    def test_heart_brake(self):
+        for _ in range(11):
+            self.g.add(10)
+        self.g.add(9)
+        self.assertEqual(299, self.g.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
