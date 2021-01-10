@@ -1,11 +1,11 @@
 import unittest
+from frame import Frame
 
 
 class TestFrame(unittest.TestCase):
-    # throw_ball(6)
-    # throw_ball(3)
-    # assertEqual(6 + 3, get_score())
-    pass
+    def test_score_no_throws(self):
+        f = Frame()
+        self.assertEqual(0, f.get_score())
 
 
 if __name__ == '__main__':
