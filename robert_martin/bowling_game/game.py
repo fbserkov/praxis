@@ -35,4 +35,4 @@ class Game:
         return score
 
     def get_score(self):
-        return self._score
+        return self.score_for_frame(self.get_current_frame() - 1)
