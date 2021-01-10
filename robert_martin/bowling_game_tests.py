@@ -1,5 +1,8 @@
+# Agile Software Development: Principles, Patterns and Practices
+# Chapter 6: A programming Episode
+
 import unittest
-from game import Game
+from bowling_game import Game
 
 
 class TestGame(unittest.TestCase):
