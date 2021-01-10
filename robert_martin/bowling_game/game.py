@@ -1,6 +1,8 @@
 class Game:
     def __init__(self):
+        self._current_frame = 0
         self._current_throw = 0
+        self._first_throw = True
         self._throws = 21 * [0]
         self._score = 0
 
@@ -8,9 +10,14 @@ class Game:
         self._throws[self._current_throw] = pins
         self._current_throw += 1
         self._score += pins
+        if self._first_throw:
+            self._first_throw = False
+            self._current_frame += 1
+        else:
+            self._first_throw = True
 
     def get_current_frame(self):
-        return 1 + (self._current_throw - 1) // 2
+        return self._current_frame
 
     def score_for_frame(self, frame):
         score, ball = 0, 0
