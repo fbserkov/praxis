@@ -1,6 +1,9 @@
 class Frame:
+    def __init__(self):
+        self._score = 0
+
     def add(self, pins):
-        pass
+        self._score += pins
 
     def get_score(self):
-        return 0
+        return self._score
