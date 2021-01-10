@@ -65,6 +65,11 @@ class TestGame(unittest.TestCase):
         self.g.add(10)  # Strike in last position of array
         self.assertEqual(2 + 8 + 10, self.g.get_score())
 
+    def test_sample_game(self):
+        for p in (1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1, 7, 3, 6, 4, 10, 2, 8, 6):
+            self.g.add(p)
+        self.assertEqual(133, self.g.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
