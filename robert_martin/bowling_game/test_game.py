@@ -76,6 +76,14 @@ class TestGame(unittest.TestCase):
         self.g.add(9)
         self.assertEqual(299, self.g.get_score())
 
+    def test_tenth_frame_spare(self):
+        for _ in range(9):
+            self.g.add(10)
+        self.g.add(9)
+        self.g.add(1)
+        self.g.add(1)
+        self.assertEqual(270, self.g.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
