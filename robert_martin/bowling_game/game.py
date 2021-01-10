@@ -11,9 +11,8 @@ class Game:
 
     def score_for_frame(self, frame):
         score, ball = 0, 0
-        while frame > 0 and ball < self._current_throw:
+        for _ in range(frame):
             score += self._throws[ball] + self._throws[ball + 1]
-            frame -= 1
             ball += 2
         return score
 
