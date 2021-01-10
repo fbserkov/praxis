@@ -7,6 +7,11 @@ class TestFrame(unittest.TestCase):
         f = Frame()
         self.assertEqual(0, f.get_score())
 
+    def test_add_one_throw(self):
+        f = Frame()
+        f.add(5)
+        self.assertEqual(5, f.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
