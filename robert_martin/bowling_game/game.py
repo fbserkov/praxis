@@ -6,9 +6,12 @@ class Game:
         self._throws = 21 * [0]
         self._score = 0
 
-    def adjust_current_frame(self):
+    def adjust_current_frame(self, pins):
         if self._first_throw:
-            self._first_throw = False
+            if pins == 10:  # strike
+                self._current_frame += 1
+            else:
+                self._first_throw = False
         else:
             self._first_throw = True
             self._current_frame += 1
@@ -17,7 +20,7 @@ class Game:
         self._throws[self._current_throw] = pins
         self._current_throw += 1
         self._score += pins
-        self.adjust_current_frame()
+        self.adjust_current_frame(pins)
 
     def get_current_frame(self):
         return self._current_frame
@@ -25,13 +28,19 @@ class Game:
     def score_for_frame(self, frame):
         score, ball = 0, 0
         for _ in range(frame):
-            frame_score = self._throws[ball] + self._throws[ball + 1]
-            # spare needs next frames first throw
-            if frame_score == 10:
-                score += frame_score + self._throws[ball + 2]
+            first_throw = self._throws[ball]
+            ball += 1
+            if first_throw == 10:
+                score += 10 + self._throws[ball] + self._throws[ball + 1]
             else:
-                score += frame_score
-            ball += 2
+                second_throw = self._throws[ball]
+                ball += 1
+                frame_score = first_throw + second_throw
+                # spare needs next frames first throw
+                if frame_score == 10:
+                    score += frame_score + self._throws[ball]
+                else:
+                    score += frame_score
         return score
 
     def get_score(self):
