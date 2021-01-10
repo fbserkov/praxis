@@ -56,6 +56,15 @@ class TestGame(unittest.TestCase):
         self.assertEqual(10 * 3 * 10, self.g.get_score())
         self.assertEqual(11, self.g.get_current_frame())
 
+    def test_end_of_array(self):
+        for _ in range(9):
+            self.g.add(0)
+            self.g.add(0)
+        self.g.add(2)
+        self.g.add(8)  # 10th frame spare
+        self.g.add(10)  # Strike in last position of array
+        self.assertEqual(2 + 8 + 10, self.g.get_score())
+
 
 if __name__ == '__main__':
     unittest.main()
