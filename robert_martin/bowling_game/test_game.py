@@ -23,6 +23,12 @@ class TestGame(unittest.TestCase):
         self.assertEqual(5 + 4, self.g.score_for_frame(1))
         self.assertEqual(5 + 4 + 7 + 2, self.g.score_for_frame(2))
 
+    def test_simple_spare(self):
+        self.g.add(3)
+        self.g.add(7)
+        self.g.add(3)
+        self.assertEqual(3 + 7 + 3, self.g.score_for_frame(1))
+
 
 if __name__ == '__main__':
     unittest.main()
