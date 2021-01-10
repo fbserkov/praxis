@@ -12,7 +12,12 @@ class Game:
     def score_for_frame(self, frame):
         score, ball = 0, 0
         for _ in range(frame):
-            score += self._throws[ball] + self._throws[ball + 1]
+            frame_score = self._throws[ball] + self._throws[ball + 1]
+            # spare needs next frames first throw
+            if frame_score == 10:
+                score += frame_score + self._throws[ball + 2]
+            else:
+                score += frame_score
             ball += 2
         return score
 
