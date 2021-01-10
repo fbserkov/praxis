@@ -15,6 +15,7 @@ class Game:
         else:
             self._first_throw = True
             self._current_frame += 1
+        self._current_frame = min(11, self._current_frame)
 
     def add(self, pins):
         self._throws[self._current_throw] = pins

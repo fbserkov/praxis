@@ -53,8 +53,8 @@ class TestGame(unittest.TestCase):
     def test_perfect_game(self):
         for _ in range(12):
             self.g.add(10)
-        self.assertEqual(300, self.g.get_score())
-        self.assertEqual(10, self.g.get_current_frame())
+        self.assertEqual(10 * 3 * 10, self.g.get_score())
+        self.assertEqual(11, self.g.get_current_frame())
 
 
 if __name__ == '__main__':
