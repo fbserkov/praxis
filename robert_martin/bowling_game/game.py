@@ -9,6 +9,9 @@ class Game:
         self._current_throw += 1
         self._score += pins
 
+    def get_current_frame(self):
+        return 1 + (self._current_throw - 1) // 2
+
     def score_for_frame(self, frame):
         score, ball = 0, 0
         for _ in range(frame):
