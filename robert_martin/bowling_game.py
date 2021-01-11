@@ -1,11 +1,11 @@
 class Game:
     def __init__(self):
-        self._current_frame = 1
+        self._current_frame = 0
         self._first_throw_in_frame = True
         self._scorer = Scorer()
 
     def score(self):
-        return self.score_for_frame(self._current_frame - 1)
+        return self.score_for_frame(self._current_frame)
 
     def score_for_frame(self, frame):
         return self._scorer.score_for_frame(frame)
@@ -29,7 +29,7 @@ class Game:
         return False
 
     def advance_frame(self):
-        self._current_frame = min(11, self._current_frame + 1)
+        self._current_frame = min(10, self._current_frame + 1)
 
 
 class Scorer:
