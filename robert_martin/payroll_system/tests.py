@@ -10,11 +10,13 @@ from salaried_classification import SalariedClassification
 class PayrollTest(unittest.TestCase):
     def test_add_salaried_employee(self):
         emp_id = 1
-        transaction = AddSalariedEmployee(emp_id, 'Bob', 'Home', 1000.00)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
         transaction.execute()
 
         employee = g_payroll_database.get_employee(emp_id)
         self.assertEqual('Bob', employee.get_name())
+        self.assertEqual('Home', employee.get_address())
 
         classification = employee.get_classification()
         self.assertEqual(1000.00, classification.get_salary())

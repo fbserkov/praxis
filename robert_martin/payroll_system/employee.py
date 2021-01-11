@@ -8,6 +8,12 @@ class Employee:
         self._payment_schedule = None
         self._payment_method = None
 
+    def get_name(self):
+        return self._name
+
+    def get_address(self):
+        return self._address
+
     def set_classification(self, payment_classification):
         self._payment_classification = payment_classification
 
@@ -25,6 +31,3 @@ class Employee:
 
     def get_method(self):
         return self._payment_method
-
-    def get_name(self):
-        return self._name
