@@ -14,16 +14,14 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
 
         employee = g_payroll_database.get_employee(emp_id)
-        salaried_classification = employee.get_classification()
-        monthly_schedule = employee.get_schedule()
-        hold_method = employee.get_method()
-
-        self.assertIsInstance(salaried_classification, SalariedClassification)
-        self.assertIsInstance(monthly_schedule, MonthlySchedule)
-        self.assertIsInstance(hold_method, HoldMethod)
-
         self.assertEqual('Bob', employee.get_name())
-        self.assertEqual(1000.00, salaried_classification.get_salary())
+
+        classification = employee.get_classification()
+        self.assertEqual(1000.00, classification.get_salary())
+
+        self.assertIsInstance(classification, SalariedClassification)
+        self.assertIsInstance(employee.get_schedule(), MonthlySchedule)
+        self.assertIsInstance(employee.get_method(), HoldMethod)
 
     # TODO: test_add_hourly_employee
     # TODO: test_add_commissioned_employee

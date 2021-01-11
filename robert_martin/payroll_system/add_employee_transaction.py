@@ -10,13 +10,10 @@ class AddEmployeeTransaction:
         self._address = address
 
     def execute(self):
-        payment_classification = self.get_classification()
-        payment_schedule = self.get_schedule()
-        payment_method = HoldMethod()
         employee = Employee(self._emp_id, self._name, self._address)
-        employee.set_classification(payment_classification)
-        employee.set_schedule(payment_schedule)
-        employee.set_method(payment_method)
+        employee.set_classification(self.get_classification())
+        employee.set_schedule(self.get_schedule())
+        employee.set_method(HoldMethod())
         g_payroll_database.add_employee(self._emp_id, employee)
 
     def get_classification(self):
