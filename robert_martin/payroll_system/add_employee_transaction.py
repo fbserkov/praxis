@@ -1,3 +1,5 @@
+from employee import Employee
+from hold_method import HoldMethod
 from payroll_database import g_payroll_database
 
 
