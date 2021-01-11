@@ -42,13 +42,12 @@ class Game:
         return score
 
     def handle_second_throw(self):
-        frame_score = self.next_two_balls()
         if self.spare():  # spare needs next frames first throw
             self._ball += 2
-            score = frame_score + self.next_ball()
+            score = 10 + self.next_ball()
         else:
+            score = self.two_balls_in_frame()
             self._ball += 2
-            score = frame_score
         return score
 
     def strike(self):
@@ -61,4 +60,7 @@ class Game:
         return self._throws[self._ball]
 
     def next_two_balls(self):
+        return self._throws[self._ball] + self._throws[self._ball + 1]
+
+    def two_balls_in_frame(self):
         return self._throws[self._ball] + self._throws[self._ball + 1]
