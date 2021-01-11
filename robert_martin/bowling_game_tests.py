@@ -20,7 +20,8 @@ class TestGame(unittest.TestCase):
         self.g.add(7)
         self.g.add(2)
         self.assertEqual(5 + 4, self.g.score_for_frame(1))
-        self.assertEqual(5 + 4 + 7 + 2, self.g.score_for_frame(2))
+        self.assertEqual(5 + 4 + 7 + 2, self.g.score_for_frame(2))  # 18
+        self.assertEqual(18, self.g.score())
 
     def test_simple_spare(self):
         self.g.add(3)
