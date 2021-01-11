@@ -1,4 +1,5 @@
 import unittest
+from payroll_database import g_payroll_database
 
 
 class PayrollTest(unittest.TestCase):
@@ -7,7 +8,7 @@ class PayrollTest(unittest.TestCase):
         AddSalatiedEmployee t(emp_id, 'Bob', 'Home', 1000.00)
         t.execute()
 
-        e = GpayrollDatabase.get_enployee(emp_id)
+        e = g_payroll_database.get_employee(emp_id)
         sc = e.get_classification()
         ms = e.get_schedule()
         hm = e.get_method()
