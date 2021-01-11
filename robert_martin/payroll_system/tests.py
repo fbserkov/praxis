@@ -5,20 +5,20 @@ from payroll_database import g_payroll_database
 class PayrollTest(unittest.TestCase):
     def test_add_salaried_employee(self):
         emp_id = 1
-        AddSalatiedEmployee t(emp_id, 'Bob', 'Home', 1000.00)
-        t.execute()
+        AddSalatiedEmployee transaction(emp_id, 'Bob', 'Home', 1000.00)
+        transaction.execute()
 
-        e = g_payroll_database.get_employee(emp_id)
-        sc = e.get_classification()
-        ms = e.get_schedule()
-        hm = e.get_method()
+        employee = g_payroll_database.get_employee(emp_id)
+        salaried_classification = employee.get_classification()
+        monthly_schedule = employee.get_schedule()
+        hold_method = employee.get_method()
 
-        self.assertIsInstance(sc, SalariedClassification)
-        self.assertIsInstance(ms, MonthlySchedule)
-        self.assertIsInstance(hm, HoldMethod)
+        self.assertIsInstance(salaried_classification, SalariedClassification)
+        self.assertIsInstance(monthly_schedule, MonthlySchedule)
+        self.assertIsInstance(hold_method, HoldMethod)
 
-        self.assertEqual('Bob', e.get_name())
-        self.assertEqual(1000.00, sc.get_salary())
+        self.assertEqual('Bob', employee.get_name())
+        self.assertEqual(1000.00, salaried_classification.get_salary())
 
 
 if __name__ == '__main__':
