@@ -4,14 +4,11 @@ class Game:
         self._first_throw_in_frame = True
         self._scorer = Scorer()
 
-    def get_score(self):
-        return self.score_for_frame(self.get_current_frame() - 1)
+    def score(self):
+        return self.score_for_frame(self._current_frame - 1)
 
     def score_for_frame(self, frame):
         return self._scorer.score_for_frame(frame)
-
-    def get_current_frame(self):
-        return self._current_frame
 
     def add(self, pins):
         self._scorer.add_throw(pins)
