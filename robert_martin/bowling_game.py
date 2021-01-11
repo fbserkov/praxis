@@ -1,8 +1,6 @@
 class Game:
     def __init__(self):
         self._ball = 0
-        self._first_throw = 0
-
         self._score = 0
         self._throws = 21 * [0]
         self._current_throw = 0
@@ -36,13 +34,15 @@ class Game:
         self._ball = 0
         score = 0
         for _ in range(frame):
-            self._first_throw = self._throws[self._ball]
-            if self._first_throw == 10:
+            if self.strike():
                 self._ball += 1
                 score += 10 + self.next_two_balls()
             else:
                 score += self.handle_second_throw()
         return score
+
+    def strike(self):
+        return self._throws[self._ball] == 10
 
     def handle_second_throw(self):
         frame_score = self.next_two_balls()
