@@ -15,10 +15,13 @@ class Game:
         self.adjust_current_frame(pins)
 
     def adjust_current_frame(self, pins):
-        if self.strike(pins) or not self._first_throw_in_frame:
+        if self.last_ball_in_frame(pins):
             self.advance_frame()
         else:
             self._first_throw_in_frame = False
+
+    def last_ball_in_frame(self, pins):
+        return self.strike(pins) or not self._first_throw_in_frame
 
     def strike(self, pins):
         return self._first_throw_in_frame and pins == 10
