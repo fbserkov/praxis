@@ -20,13 +20,15 @@ class Game:
     def adjust_current_frame(self, pins):
         if self._first_throw_in_frame:
             if pins == 10:  # strike
-                self._current_frame += 1
+                self.advance_frame()
             else:
                 self._first_throw_in_frame = False
         else:
             self._first_throw_in_frame = True
-            self._current_frame += 1
-        self._current_frame = min(11, self._current_frame)
+            self.advance_frame()
+
+    def advance_frame(self):
+        self._current_frame = min(11, self._current_frame + 1)
 
 
 class Scorer:
