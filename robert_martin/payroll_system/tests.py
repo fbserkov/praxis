@@ -1,10 +1,13 @@
 import unittest
 
+from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
 from hold_method import HoldMethod
+from hourly_classification import HourlyClassification
 from monthly_schedule import MonthlySchedule
 from payroll_database import g_payroll_database
 from salaried_classification import SalariedClassification
+from weekly_schedule import WeeklySchedule
 
 
 class PayrollTest(unittest.TestCase):
@@ -25,7 +28,23 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(employee.get_schedule(), MonthlySchedule)
         self.assertIsInstance(employee.get_method(), HoldMethod)
 
-    # TODO: test_add_hourly_employee
+    def test_add_hourly_employee(self):
+        emp_id = 1
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bob', 'Home', hourly_rate=10.00)
+        transaction.execute()
+
+        employee = g_payroll_database.get_employee(emp_id)
+        self.assertEqual('Bob', employee.get_name())
+        self.assertEqual('Home', employee.get_address())
+
+        classification = employee.get_classification()
+        self.assertEqual(10.00, classification.get_hourly_rate())
+
+        self.assertIsInstance(classification, HourlyClassification)
+        self.assertIsInstance(employee.get_schedule(), WeeklySchedule)
+        self.assertIsInstance(employee.get_method(), HoldMethod)
+
     # TODO: test_add_commissioned_employee
 
 
