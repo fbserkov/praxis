@@ -1,4 +1,6 @@
 from typing import NewType
+from add_employee_transaction import (
+    PaymentClassification, PaymentMethod, PaymentSchedule)
 
 EmpId = NewType('EmpId', int)
 
@@ -9,9 +11,9 @@ class Employee:
         self._name = name
         self._address = address
 
-        self._payment_classification = None
-        self._payment_schedule = None
-        self._payment_method = None
+        self._pc = PaymentClassification()
+        self._ps = PaymentSchedule()
+        self._pm = PaymentMethod()
 
     def get_name(self):
         return self._name
@@ -19,20 +21,20 @@ class Employee:
     def get_address(self):
         return self._address
 
-    def set_classification(self, payment_classification):
-        self._payment_classification = payment_classification
+    def set_classification(self, pc: PaymentClassification):
+        self._pc = pc
 
-    def set_schedule(self, payment_schedule):
-        self._payment_schedule = payment_schedule
+    def set_schedule(self, ps: PaymentSchedule):
+        self._ps = ps
 
-    def set_method(self, payment_method):
-        self._payment_method = payment_method
+    def set_method(self, pm: PaymentMethod):
+        self._pm = pm
 
-    def get_classification(self):
-        return self._payment_classification
+    def get_classification(self) -> PaymentClassification:
+        return self._pc
 
-    def get_schedule(self):
-        return self._payment_schedule
+    def get_schedule(self) -> PaymentSchedule:
+        return self._ps
 
-    def get_method(self):
-        return self._payment_method
+    def get_method(self) -> PaymentMethod:
+        return self._pm

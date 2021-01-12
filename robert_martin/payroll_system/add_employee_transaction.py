@@ -29,7 +29,7 @@ class AddEmployeeTransaction:
         g_payroll_database.add_employee(self._emp_id, employee)
 
     def get_classification(self):
-        pass
+        return PaymentClassification()
 
     def get_schedule(self):
-        pass
+        return PaymentSchedule()
