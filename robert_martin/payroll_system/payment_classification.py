@@ -31,9 +31,18 @@ class CommissionedClassification(PaymentClassification):
     def __init__(self, salary, commission_rate):
         self._salary = salary
         self._commission_rate = commission_rate
+        self._sales_receipt = []
 
     def get_salary(self):
         return self._salary
 
     def get_commission_rate(self):
         return self._commission_rate
+
+    def add_sales_receipt(self, sales_receipt):
+        self._sales_receipt.append(sales_receipt)
+
+    def get_sales_receipt(self, date):
+        for sales_receipt in self._sales_receipt:
+            if sales_receipt.get_date() == date:
+                return sales_receipt

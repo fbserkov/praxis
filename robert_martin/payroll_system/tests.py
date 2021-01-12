@@ -10,6 +10,7 @@ from payment_classification import (
 from payment_method import HoldMethod
 from payment_schedule import BiweeklySchedule, MonthlySchedule, WeeklySchedule
 from payroll_database import g_payroll_database
+from sales_receipt_transaction import SalesReceiptTransaction
 from timecard_transaction import TimecardTransaction
 
 
@@ -93,6 +94,22 @@ class PayrollTest(unittest.TestCase):
         timecard = classification.get_timecard(date=20011031)
         self.assertTrue(timecard)
         self.assertEqual(8.0, timecard.get_hours())
+
+    def test_sales_receipt_transaction(self):
+        emp_id = EmpId(3)
+        transaction = AddCommissionedEmployee(
+            emp_id, 'Lance', 'Home', salary=2500, commission_rate=3.2)
+        transaction.execute()
+
+        transaction = SalesReceiptTransaction(
+            emp_id, date=20011031, amount=3500)
+        transaction.execute()
+        employee = g_payroll_database.get_employee(emp_id)
+        classification = employee.get_classification()
+
+        sales_receipt = classification.get_sales_receipt(date=20011031)
+        self.assertTrue(sales_receipt)
+        self.assertEqual(3500, sales_receipt.get_amount())
 
 
 if __name__ == '__main__':
