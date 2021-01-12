@@ -10,6 +10,7 @@ from payment_classification import (
 from payment_method import HoldMethod
 from payment_schedule import BiweeklySchedule, MonthlySchedule, WeeklySchedule
 from payroll_database import g_payroll_database
+from time_card_transaction import TimeCardTransaction
 
 
 class PayrollTest(unittest.TestCase):
@@ -77,6 +78,21 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         employee = g_payroll_database.get_employee(emp_id)
         self.assertIsNone(employee)
+
+    def test_time_card_transaction(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+
+        transaction = TimeCardTransaction(emp_id, date=20011031, hours=8.0)
+        transaction.execute()
+        employee = g_payroll_database.get_employee(emp_id)
+        classification = employee.get_classification()
+
+        timecard = classification.get_timecard(date=20011031)
+        self.assertTrue(timecard)
+        self.assertEqual(8.0, timecard.get_hours())
 
 
 if __name__ == '__main__':
