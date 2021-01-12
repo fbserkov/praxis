@@ -15,7 +15,7 @@ class Timecard:
         return self._hours
 
 
-class TimeCardTransaction:
+class TimecardTransaction:
     def __init__(self, emp_id: EmpId, date, hours):
         self._emp_id = emp_id
         self._date = date
