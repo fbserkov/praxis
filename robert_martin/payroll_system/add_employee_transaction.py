@@ -1,10 +1,10 @@
-from employee import Employee
+from employee import EmpId, Employee
 from hold_method import HoldMethod
 from payroll_database import g_payroll_database
 
 
 class AddEmployeeTransaction:
-    def __init__(self, emp_id, name, address):
+    def __init__(self, emp_id: EmpId, name, address):
         self._emp_id = emp_id
         self._name = name
         self._address = address

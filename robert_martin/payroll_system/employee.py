@@ -1,5 +1,10 @@
+from typing import NewType
+
+EmpId = NewType('EmpId', int)
+
+
 class Employee:
-    def __init__(self, emp_id, name, address):
+    def __init__(self, emp_id: EmpId, name, address):
         self._emp_id = emp_id
         self._name = name
         self._address = address

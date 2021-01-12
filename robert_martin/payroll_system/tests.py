@@ -5,6 +5,7 @@ from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
 from biweekly_schedule import BiweeklySchedule
 from commissioned_classification import CommissionedClassification
+from employee import EmpId
 from hold_method import HoldMethod
 from hourly_classification import HourlyClassification
 from monthly_schedule import MonthlySchedule
@@ -15,7 +16,7 @@ from weekly_schedule import WeeklySchedule
 
 class PayrollTest(unittest.TestCase):
     def test_add_salaried_employee(self):
-        emp_id = 1
+        emp_id = EmpId(1)
         transaction = AddSalariedEmployee(
             emp_id, 'Bob', 'Home', salary=1000.00)
         transaction.execute()
@@ -32,7 +33,7 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(employee.get_method(), HoldMethod)
 
     def test_add_hourly_employee(self):
-        emp_id = 1
+        emp_id = EmpId(1)
         transaction = AddHourlyEmployee(
             emp_id, 'Bob', 'Home', hourly_rate=10.00)
         transaction.execute()
@@ -49,7 +50,7 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(employee.get_method(), HoldMethod)
 
     def test_add_commissioned_employee(self):
-        emp_id = 1
+        emp_id = EmpId(1)
         transaction = AddCommissionedEmployee(
             emp_id, 'Bob', 'Home', salary=1000.00, commission_rate=0.01)
         transaction.execute()
