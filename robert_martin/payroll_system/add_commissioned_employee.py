@@ -1,4 +1,5 @@
-from add_employee_transaction import AddEmployeeTransaction
+from add_employee_transaction import (
+    AddEmployeeTransaction, PaymentClassification, PaymentSchedule)
 from biweekly_schedule import BiweeklySchedule
 from commissioned_classification import CommissionedClassification
 
@@ -9,8 +10,8 @@ class AddCommissionedEmployee(AddEmployeeTransaction):
         self._salary = salary
         self._commission_rate = commission_rate
 
-    def get_classification(self):
+    def get_classification(self) -> PaymentClassification:
         return CommissionedClassification(self._salary, self._commission_rate)
 
-    def get_schedule(self):
+    def get_schedule(self) -> PaymentSchedule:
         return BiweeklySchedule()
