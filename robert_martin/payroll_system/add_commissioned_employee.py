@@ -1,6 +1,6 @@
-from add_employee_transaction import (
-    AddEmployeeTransaction, PaymentClassification)
-from commissioned_classification import CommissionedClassification
+from add_employee_transaction import AddEmployeeTransaction
+from payment_classification import (
+    CommissionedClassification, PaymentClassification)
 from payment_schedule import BiweeklySchedule, PaymentSchedule
 
 

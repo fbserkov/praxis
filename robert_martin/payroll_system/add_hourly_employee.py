@@ -1,7 +1,6 @@
-from add_employee_transaction import (
-    AddEmployeeTransaction, PaymentClassification)
-from hourly_classification import HourlyClassification
-from payment_schedule import WeeklySchedule, PaymentSchedule
+from add_employee_transaction import AddEmployeeTransaction
+from payment_classification import HourlyClassification, PaymentClassification
+from payment_schedule import PaymentSchedule, WeeklySchedule
 
 
 class AddHourlyEmployee(AddEmployeeTransaction):
