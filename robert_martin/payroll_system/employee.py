@@ -1,5 +1,5 @@
 from typing import NewType
-from add_employee_transaction import PaymentClassification
+from payment_classification import PaymentClassification
 from payment_method import PaymentMethod
 from payment_schedule import PaymentSchedule
 

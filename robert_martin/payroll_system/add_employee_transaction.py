@@ -1,11 +1,8 @@
 from employee import EmpId, Employee
+from payment_classification import PaymentClassification
 from payment_method import HoldMethod
 from payment_schedule import PaymentSchedule
 from payroll_database import g_payroll_database
-
-
-class PaymentClassification:
-    pass
 
 
 class AddEmployeeTransaction:
