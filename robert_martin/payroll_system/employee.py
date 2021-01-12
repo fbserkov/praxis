@@ -1,6 +1,6 @@
 from typing import NewType
-from add_employee_transaction import (
-    PaymentClassification, PaymentMethod, PaymentSchedule)
+from add_employee_transaction import PaymentClassification, PaymentMethod
+from payment_schedule import PaymentSchedule
 
 EmpId = NewType('EmpId', int)
 

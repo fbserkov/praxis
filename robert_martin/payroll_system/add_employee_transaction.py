@@ -1,13 +1,10 @@
 from employee import EmpId, Employee
 from hold_method import HoldMethod
+from payment_schedule import PaymentSchedule
 from payroll_database import g_payroll_database
 
 
 class PaymentClassification:
-    pass
-
-
-class PaymentSchedule:
     pass
 
 

@@ -3,15 +3,13 @@ import unittest
 from add_commissioned_employee import AddCommissionedEmployee
 from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
-from biweekly_schedule import BiweeklySchedule
 from commissioned_classification import CommissionedClassification
 from employee import EmpId
 from hold_method import HoldMethod
 from hourly_classification import HourlyClassification
-from monthly_schedule import MonthlySchedule
+from payment_schedule import BiweeklySchedule, MonthlySchedule, WeeklySchedule
 from payroll_database import g_payroll_database
 from salaried_classification import SalariedClassification
-from weekly_schedule import WeeklySchedule
 
 
 class PayrollTest(unittest.TestCase):
