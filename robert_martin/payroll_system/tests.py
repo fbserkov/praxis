@@ -331,6 +331,19 @@ class PayrollTest(unittest.TestCase):
         self.validate_hourly_paycheck(
             transaction, emp_id, pay_date, (8 + 1.5) * 15.25)
 
+    def test_pay_single_hourly_employee_one_wrong_date(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+        pay_date = date(2001, 11, 8)  # Thursday
+
+        transaction = TimecardTransaction(emp_id, pay_date, hours=9.0)
+        transaction.execute()
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.assertFalse(transaction.get_paycheck(emp_id))
+
 
 if __name__ == '__main__':
     unittest.main()
