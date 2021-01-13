@@ -11,7 +11,7 @@ from change_classification_transaction import (
 from change_employee_transaction import (
     ChangeAddressTransaction, ChangeNameTransaction)
 from change_method_transaction import (
-    ChangeDirectTransaction, ChangeMailTransaction)
+    ChangeDirectTransaction, ChangeHoldTransaction, ChangeMailTransaction)
 from delete_employee_transaction import DeleteEmployeeTransaction
 from employee import EmpId
 from payment_classification import (
@@ -231,6 +231,18 @@ class PayrollTest(unittest.TestCase):
         method = g_payroll_database.get_employee(emp_id).get_method()
         self.assertIsInstance(method, MailMethod)
         self.assertEqual('home address', method.get_address())
+
+    def test_change_hold_transaction(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+        transaction = ChangeHoldTransaction(emp_id, address='test address')
+        transaction.execute()
+
+        method = g_payroll_database.get_employee(emp_id).get_method()
+        self.assertIsInstance(method, HoldMethod)
+        self.assertEqual('test address', method.get_address())
 
 
 if __name__ == '__main__':

@@ -23,4 +23,8 @@ class MailMethod(PaymentMethod):
 
 
 class HoldMethod(PaymentMethod):
-    pass
+    def __init__(self, address='work address'):
+        self._address = address
+
+    def get_address(self):
+        return self._address

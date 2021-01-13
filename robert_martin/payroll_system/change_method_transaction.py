@@ -1,6 +1,6 @@
 from change_employee_transaction import ChangeEmployeeTransaction
 from employee import EmpId, Employee
-from payment_method import DirectMethod, MailMethod, PaymentMethod
+from payment_method import DirectMethod, HoldMethod, MailMethod, PaymentMethod
 
 
 class ChangeMethodTransaction(ChangeEmployeeTransaction):
@@ -31,3 +31,12 @@ class ChangeMailTransaction(ChangeMethodTransaction):
 
     def get_method(self) -> MailMethod:
         return MailMethod(self._address)
+
+
+class ChangeHoldTransaction(ChangeMethodTransaction):
+    def __init__(self, emp_id: EmpId, address):
+        ChangeMethodTransaction.__init__(self, emp_id)
+        self._address = address
+
+    def get_method(self) -> HoldMethod:
+        return HoldMethod(self._address)
