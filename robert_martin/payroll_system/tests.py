@@ -289,6 +289,25 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         self.assertFalse(transaction.get_paycheck(emp_id))
 
+    def test_pay_single_hourly_employee_no_time_cards(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+
+        pay_date = date(2001, 11, 9)  # Friday
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.validate_hourly_paycheck(transaction, emp_id, pay_date, 0.0)
+
+    def validate_hourly_paycheck(self, transaction, emp_id, pay_date, pay):
+        paycheck = transaction.get_paycheck(emp_id)
+        self.assertEqual(pay_date, paycheck.get_pay_date())
+        self.assertEqual(pay, paycheck.get_gross_pay())
+        self.assertEqual('Hold', paycheck.get_field('Disposition'))
+        self.assertEqual(0.0, paycheck.get_deductions())
+        self.assertEqual(pay, paycheck.get_net_pay())
+
 
 if __name__ == '__main__':
     unittest.main()

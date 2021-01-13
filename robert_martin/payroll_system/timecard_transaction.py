@@ -1,18 +1,7 @@
 from employee import EmpId
 from payment_classification import HourlyClassification
 from payroll_database import g_payroll_database
-
-
-class Timecard:
-    def __init__(self, date, hours):
-        self._date = date
-        self._hours = hours
-
-    def get_date(self):
-        return self._date
-
-    def get_hours(self):
-        return self._hours
+from timecard import Timecard
 
 
 class TimecardTransaction:

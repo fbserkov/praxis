@@ -1,9 +1,9 @@
 from typing import NewType
 
+from affiliation import Affiliation
 from payment_classification import PaymentClassification
 from payment_method import PaymentMethod
 from payment_schedule import PaymentSchedule
-from affiliation import Affiliation
 
 EmpId = NewType('EmpId', int)
 

@@ -1,3 +1,7 @@
+from typing import List
+from timecard import Timecard
+
+
 class PaymentClassification:
     def calculate_pay(self, paycheck):
         pass
@@ -17,18 +21,21 @@ class SalariedClassification(PaymentClassification):
 class HourlyClassification(PaymentClassification):
     def __init__(self, hourly_rate):
         self._hourly_rate = hourly_rate
-        self._timecards = []
+        self._timecards: List[Timecard] = []
 
     def get_hourly_rate(self):
         return self._hourly_rate
 
-    def add_timecard(self, timecard):
+    def add_timecard(self, timecard: Timecard):
         self._timecards.append(timecard)
 
     def get_timecard(self, date):
         for timecard in self._timecards:
             if timecard.get_date() == date:
                 return timecard
+
+    def calculate_pay(self, paycheck):
+        return sum(tc.get_hours() for tc in self._timecards)
 
 
 class CommissionedClassification(PaymentClassification):

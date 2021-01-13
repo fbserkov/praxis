@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 
 class PaymentSchedule:
@@ -9,12 +9,14 @@ class PaymentSchedule:
 
 class MonthlySchedule(PaymentSchedule):
     @staticmethod
-    def is_pay_date(pay_date):
+    def is_pay_date(pay_date: date):
         return pay_date.month != (pay_date + timedelta(1)).month
 
 
 class WeeklySchedule(PaymentSchedule):
-    pass
+    @staticmethod
+    def is_pay_date(pay_date):
+        return pay_date.isoweekday() == 5
 
 
 class BiweeklySchedule(PaymentSchedule):
