@@ -19,11 +19,11 @@ class Employee:
         self._pm = PaymentMethod()
         self._a = Affiliation()
 
-    def get_name(self):
-        return self._name
+    def set_name(self, name):
+        self._name = name
 
-    def get_address(self):
-        return self._address
+    def set_address(self, address):
+        self._address = address
 
     def set_classification(self, pc: PaymentClassification):
         self._pc = pc
@@ -36,6 +36,12 @@ class Employee:
 
     def set_affiliation(self, a: Affiliation):
         self._a = a
+
+    def get_name(self):
+        return self._name
+
+    def get_address(self):
+        return self._address
 
     def get_classification(self) -> PaymentClassification:
         return self._pc

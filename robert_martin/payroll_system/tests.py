@@ -4,6 +4,8 @@ from add_commissioned_employee import AddCommissionedEmployee
 from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
 from affiliation import MemberId, UnionAffiliation
+from change_employee_transaction import (
+    ChangeAddressTransaction, ChangeNameTransaction)
 from delete_employee_transaction import DeleteEmployeeTransaction
 from employee import EmpId
 from payment_classification import (
@@ -131,6 +133,28 @@ class PayrollTest(unittest.TestCase):
         service_charge = union_affiliation.get_service_charge(20011101)
         self.assertTrue(service_charge)
         self.assertEqual(12.95, service_charge.get_amount())
+
+    def test_change_name_transaction(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+
+        transaction = ChangeNameTransaction(emp_id, 'Bob')
+        transaction.execute()
+        employee = g_payroll_database.get_employee(emp_id)
+        self.assertEqual('Bob', employee.get_name())
+
+    def test_change_address_transaction(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+
+        transaction = ChangeAddressTransaction(emp_id, 'Garage')
+        transaction.execute()
+        employee = g_payroll_database.get_employee(emp_id)
+        self.assertEqual('Garage', employee.get_address())
 
 
 if __name__ == '__main__':
