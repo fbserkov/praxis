@@ -35,7 +35,7 @@ class HourlyClassification(PaymentClassification):
                 return timecard
 
     def calculate_pay(self, paycheck):
-        return sum(tc.get_hours() for tc in self._timecards)
+        return sum(tc.get_hours()*self._hourly_rate for tc in self._timecards)
 
 
 class CommissionedClassification(PaymentClassification):

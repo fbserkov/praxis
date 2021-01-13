@@ -303,6 +303,19 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         self.validate_hourly_paycheck(transaction, emp_id, pay_date, 0.0)
 
+    def test_pay_single_hourly_employee_one_time_cards(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+        pay_date = date(2001, 11, 9)  # Friday
+
+        transaction = TimecardTransaction(emp_id, pay_date, hours=2.0)
+        transaction.execute()
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.validate_hourly_paycheck(transaction, emp_id, pay_date, 30.5)
+
 
 if __name__ == '__main__':
     unittest.main()
