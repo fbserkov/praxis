@@ -5,7 +5,9 @@ from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
 from affiliation import MemberId, UnionAffiliation
 from change_classification_transaction import (
-    ChangeHourlyTransaction, ChangeSalariedTransaction)
+    ChangeCommissionedTransaction, ChangeHourlyTransaction,
+    ChangeSalariedTransaction,
+)
 from change_employee_transaction import (
     ChangeAddressTransaction, ChangeNameTransaction)
 from delete_employee_transaction import DeleteEmployeeTransaction
@@ -185,6 +187,22 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(classification, HourlyClassification)
         self.assertEqual(27.52, classification.get_hourly_rate())
         self.assertIsInstance(employee.get_schedule(), WeeklySchedule)
+
+    def test_change_commissioned_transaction(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+        transaction = ChangeCommissionedTransaction(
+            emp_id, salary=2500, commission_rate=3.2)
+        transaction.execute()
+
+        employee = g_payroll_database.get_employee(emp_id)
+        classification = employee.get_classification()
+        self.assertIsInstance(classification, CommissionedClassification)
+        self.assertEqual(2500, classification.get_salary())
+        self.assertEqual(3.2, classification.get_commission_rate())
+        self.assertIsInstance(employee.get_schedule(), BiweeklySchedule)
 
 
 if __name__ == '__main__':
