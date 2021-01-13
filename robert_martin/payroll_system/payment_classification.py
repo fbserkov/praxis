@@ -1,4 +1,7 @@
+from datetime import timedelta
 from typing import List
+
+from paycheck import Paycheck
 from timecard import Timecard
 
 
@@ -34,14 +37,23 @@ class HourlyClassification(PaymentClassification):
             if timecard.get_date() == date:
                 return timecard
 
-    def calculate_pay(self, paycheck):
-        return sum(self._calculate_timecard_pay(tc) for tc in self._timecards)
+    def calculate_pay(self, paycheck: Paycheck):
+        return sum(
+            self._calculate_hours(tc.get_hours()) for tc in self._timecards
+            if self._is_in_pay_period(tc, paycheck.get_pay_date())
+        )
 
-    def _calculate_timecard_pay(self, tc: Timecard):
-        hours = tc.get_hours()
+    def _calculate_hours(self, hours):
         if hours > 8:
             return (8 + (hours - 8) * 1.5) * self._hourly_rate
         return hours * self._hourly_rate
+
+    @staticmethod
+    def _is_in_pay_period(tc: Timecard, pay_period):
+        pay_period_end_date = pay_period
+        pay_period_start_date = pay_period - timedelta(5)
+        timecard_date = tc.get_date()
+        return pay_period_start_date <= timecard_date <= pay_period_end_date
 
 
 class CommissionedClassification(PaymentClassification):

@@ -360,6 +360,24 @@ class PayrollTest(unittest.TestCase):
         self.validate_hourly_paycheck(
             transaction, emp_id, pay_date, (2.0 + 5.0) * 15.25)
 
+    def test_pay_single_hourly_employee_with_time_cards_spanning_two_pay_periods(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+        pay_date = date(2001, 11, 9)  # Friday
+        date_in_previous_pay_period = date(2001, 11, 2)
+
+        transaction = TimecardTransaction(emp_id, pay_date, hours=2.0)
+        transaction.execute()
+        transaction = TimecardTransaction(
+            emp_id, date_in_previous_pay_period, hours=5.0)
+        transaction.execute()
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.validate_hourly_paycheck(
+            transaction, emp_id, pay_date, 2.0 * 15.25)
+
 
 if __name__ == '__main__':
     unittest.main()
