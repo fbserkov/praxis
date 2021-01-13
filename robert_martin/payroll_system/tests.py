@@ -3,6 +3,7 @@ import unittest
 from add_commissioned_employee import AddCommissionedEmployee
 from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
+from affiliation import MemberId, UnionAffiliation
 from delete_employee_transaction import DeleteEmployeeTransaction
 from employee import EmpId
 from payment_classification import (
@@ -11,6 +12,7 @@ from payment_method import HoldMethod
 from payment_schedule import BiweeklySchedule, MonthlySchedule, WeeklySchedule
 from payroll_database import g_payroll_database
 from sales_receipt_transaction import SalesReceiptTransaction
+from service_charge_transaction import ServiceChargeTransaction
 from timecard_transaction import TimecardTransaction
 
 
@@ -110,6 +112,25 @@ class PayrollTest(unittest.TestCase):
         sales_receipt = classification.get_sales_receipt(date=20011031)
         self.assertTrue(sales_receipt)
         self.assertEqual(3500, sales_receipt.get_amount())
+
+    def test_add_service_charge(self):
+        emp_id = EmpId(2)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+        employee = g_payroll_database.get_employee(emp_id)
+
+        union_affiliation = UnionAffiliation()
+        employee.set_affiliation(union_affiliation)
+        member_id = MemberId(86)  # Maxwell Smart
+        g_payroll_database.add_union_member(member_id, employee)
+
+        transaction = ServiceChargeTransaction(
+            member_id, date=20011101, charge=12.95)
+        transaction.execute()
+        service_charge = union_affiliation.get_service_charge(20011101)
+        self.assertTrue(service_charge)
+        self.assertEqual(12.95, service_charge.get_amount())
 
 
 if __name__ == '__main__':

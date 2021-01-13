@@ -1,7 +1,9 @@
 from typing import NewType
+
 from payment_classification import PaymentClassification
 from payment_method import PaymentMethod
 from payment_schedule import PaymentSchedule
+from affiliation import Affiliation
 
 EmpId = NewType('EmpId', int)
 
@@ -15,6 +17,7 @@ class Employee:
         self._pc = PaymentClassification()
         self._ps = PaymentSchedule()
         self._pm = PaymentMethod()
+        self._a = Affiliation()
 
     def get_name(self):
         return self._name
@@ -31,6 +34,9 @@ class Employee:
     def set_method(self, pm: PaymentMethod):
         self._pm = pm
 
+    def set_affiliation(self, a: Affiliation):
+        self._a = a
+
     def get_classification(self) -> PaymentClassification:
         return self._pc
 
@@ -39,3 +45,6 @@ class Employee:
 
     def get_method(self) -> PaymentMethod:
         return self._pm
+
+    def get_affiliation(self) -> Affiliation:
+        return self._a
