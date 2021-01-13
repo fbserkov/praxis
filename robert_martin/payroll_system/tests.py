@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 
 from add_commissioned_employee import AddCommissionedEmployee
 from add_hourly_employee import AddHourlyEmployee
@@ -15,6 +16,7 @@ from change_method_transaction import (
     ChangeDirectTransaction, ChangeHoldTransaction, ChangeMailTransaction)
 from delete_employee_transaction import DeleteEmployeeTransaction
 from employee import EmpId
+from payday_transaction import PaydayTransaction
 from payment_classification import (
     CommissionedClassification, HourlyClassification, SalariedClassification)
 from payment_method import DirectMethod, HoldMethod, MailMethod
@@ -259,6 +261,33 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(affiliation, UnionAffiliation)
         self.assertEqual(99.42, affiliation.get_dues())
         self.assertIs(employee, g_payroll_database.get_union_member(member_id))
+
+    def test_pay_single_salaried_employee(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+        pay_date = date(2001, 11, 30)
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+
+        paycheck = transaction.get_paycheck(emp_id)
+        self.assertEqual(pay_date, paycheck.get_pay_date())
+        self.assertEqual(1000.00, paycheck.get_gross_pay())
+        self.assertEqual('Hold', paycheck.get_field('Disposition'))
+        self.assertEqual(0.0, paycheck.get_deductions())
+        self.assertEqual(1000.00, paycheck.get_net_pay())
+
+    def test_pay_single_salaried_employee_on_wrong_date(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+
+        pay_date = date(2001, 11, 29)
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.assertFalse(transaction.get_paycheck(emp_id))
 
 
 if __name__ == '__main__':

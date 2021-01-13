@@ -13,6 +13,9 @@ class PayrollDatabase:
     def add_union_member(self, member_id: MemberId, e: Employee):
         self._members[member_id] = e
 
+    def get_all_employee_ids(self):
+        return self._employees.keys()
+
     def get_employee(self, emp_id: EmpId) -> Employee:
         return self._employees.get(emp_id)
 

@@ -14,10 +14,10 @@ class Employee:
         self._name = name
         self._address = address
 
-        self._pc = PaymentClassification()
-        self._ps = PaymentSchedule()
-        self._pm = PaymentMethod()
-        self._a = Affiliation()
+        self._classification = PaymentClassification()
+        self._schedule = PaymentSchedule()
+        self._method = PaymentMethod()
+        self._affiliation = Affiliation()
 
     def set_name(self, name):
         self._name = name
@@ -26,16 +26,16 @@ class Employee:
         self._address = address
 
     def set_classification(self, pc: PaymentClassification):
-        self._pc = pc
+        self._classification = pc
 
     def set_schedule(self, ps: PaymentSchedule):
-        self._ps = ps
+        self._schedule = ps
 
     def set_method(self, pm: PaymentMethod):
-        self._pm = pm
+        self._method = pm
 
     def set_affiliation(self, a: Affiliation):
-        self._a = a
+        self._affiliation = a
 
     def get_name(self):
         return self._name
@@ -44,13 +44,25 @@ class Employee:
         return self._address
 
     def get_classification(self) -> PaymentClassification:
-        return self._pc
+        return self._classification
 
     def get_schedule(self) -> PaymentSchedule:
-        return self._ps
+        return self._schedule
 
     def get_method(self) -> PaymentMethod:
-        return self._pm
+        return self._method
 
     def get_affiliation(self) -> Affiliation:
-        return self._a
+        return self._affiliation
+
+    def is_pay_date(self, date):
+        return self._schedule.is_pay_date(date)
+
+    def payday(self, paycheck):
+        gross_pay = self._classification.calculate_pay(paycheck)
+        deductions = self._affiliation.calculate_deductions(paycheck)
+        net_pay = gross_pay - deductions
+        paycheck.set_gross_pay(gross_pay)
+        paycheck.set_deductions(deductions)
+        paycheck.set_net_pay(net_pay)
+        self._method.pay(paycheck)

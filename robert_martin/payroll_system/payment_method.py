@@ -1,5 +1,6 @@
 class PaymentMethod:
-    pass
+    def pay(self, paycheck):
+        pass
 
 
 class DirectMethod(PaymentMethod):

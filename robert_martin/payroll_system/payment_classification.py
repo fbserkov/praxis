@@ -1,5 +1,6 @@
 class PaymentClassification:
-    pass
+    def calculate_pay(self, paycheck):
+        pass
 
 
 class SalariedClassification(PaymentClassification):
@@ -7,6 +8,9 @@ class SalariedClassification(PaymentClassification):
         self._salary = salary
 
     def get_salary(self):
+        return self._salary
+
+    def calculate_pay(self, paycheck):
         return self._salary
 
 

@@ -16,7 +16,8 @@ class ServiceCharge:
 
 
 class Affiliation:
-    pass
+    def calculate_deductions(self, paycheck):
+        return 0.0
 
 
 class NoAffiliation(Affiliation):
