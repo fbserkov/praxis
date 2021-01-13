@@ -4,6 +4,7 @@ from add_commissioned_employee import AddCommissionedEmployee
 from add_hourly_employee import AddHourlyEmployee
 from add_salaried_employee import AddSalariedEmployee
 from affiliation import MemberId, UnionAffiliation
+from change_affiliation_transaction import ChangeMemberTransaction
 from change_classification_transaction import (
     ChangeCommissionedTransaction, ChangeHourlyTransaction,
     ChangeSalariedTransaction,
@@ -243,6 +244,21 @@ class PayrollTest(unittest.TestCase):
         method = g_payroll_database.get_employee(emp_id).get_method()
         self.assertIsInstance(method, HoldMethod)
         self.assertEqual('test address', method.get_address())
+
+    def test_change_member_transaction(self):
+        emp_id = EmpId(2)
+        member_id = MemberId(7734)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.25)
+        transaction.execute()
+        transaction = ChangeMemberTransaction(emp_id, member_id, dues=99.42)
+        transaction.execute()
+
+        employee = g_payroll_database.get_employee(emp_id)
+        affiliation = employee.get_affiliation()
+        self.assertIsInstance(affiliation, UnionAffiliation)
+        self.assertEqual(99.42, affiliation.get_dues())
+        self.assertIs(employee, g_payroll_database.get_union_member(member_id))
 
 
 if __name__ == '__main__':

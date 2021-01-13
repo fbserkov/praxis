@@ -20,8 +20,16 @@ class Affiliation:
 
 
 class UnionAffiliation(Affiliation):
-    def __init__(self):
+    def __init__(self, member_id: MemberId = None, dues=None):
+        self._member_id = member_id
+        self._dues = dues
         self._sc = None
+
+    def set_dues(self, dues):
+        self._dues = dues
+
+    def get_dues(self):
+        return self._dues
 
     def add_service_charge(self, date, charge):
         self._sc = ServiceCharge(date, amount=charge)
