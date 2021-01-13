@@ -10,12 +10,13 @@ from change_classification_transaction import (
 )
 from change_employee_transaction import (
     ChangeAddressTransaction, ChangeNameTransaction)
-from change_method_transaction import ChangeDirectTransaction
+from change_method_transaction import (
+    ChangeDirectTransaction, ChangeMailTransaction)
 from delete_employee_transaction import DeleteEmployeeTransaction
 from employee import EmpId
 from payment_classification import (
     CommissionedClassification, HourlyClassification, SalariedClassification)
-from payment_method import DirectMethod, HoldMethod
+from payment_method import DirectMethod, HoldMethod, MailMethod
 from payment_schedule import BiweeklySchedule, MonthlySchedule, WeeklySchedule
 from payroll_database import g_payroll_database
 from sales_receipt_transaction import SalesReceiptTransaction
@@ -218,6 +219,18 @@ class PayrollTest(unittest.TestCase):
         self.assertIsInstance(method, DirectMethod)
         self.assertEqual('VTB', method.get_bank())
         self.assertEqual(1234123412341234, method.get_account())
+
+    def test_change_mail_transaction(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+        transaction = ChangeMailTransaction(emp_id, address='home address')
+        transaction.execute()
+
+        method = g_payroll_database.get_employee(emp_id).get_method()
+        self.assertIsInstance(method, MailMethod)
+        self.assertEqual('home address', method.get_address())
 
 
 if __name__ == '__main__':

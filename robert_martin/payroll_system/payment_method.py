@@ -14,5 +14,13 @@ class DirectMethod(PaymentMethod):
         return self._account
 
 
+class MailMethod(PaymentMethod):
+    def __init__(self, address):
+        self._address = address
+
+    def get_address(self):
+        return self._address
+
+
 class HoldMethod(PaymentMethod):
     pass
