@@ -1,7 +1,8 @@
 from change_employee_transaction import ChangeEmployeeTransaction
 from employee import EmpId, Employee
-from payment_classification import HourlyClassification, PaymentClassification
-from payment_schedule import PaymentSchedule, WeeklySchedule
+from payment_classification import (
+    HourlyClassification, PaymentClassification, SalariedClassification)
+from payment_schedule import MonthlySchedule, PaymentSchedule, WeeklySchedule
 
 
 class ChangeClassificationTransaction(ChangeEmployeeTransaction):
@@ -17,6 +18,18 @@ class ChangeClassificationTransaction(ChangeEmployeeTransaction):
 
     def get_schedule(self) -> PaymentSchedule:
         return PaymentSchedule()
+
+
+class ChangeSalariedTransaction(ChangeClassificationTransaction):
+    def __init__(self, emp_id: EmpId, salary):
+        ChangeClassificationTransaction.__init__(self, emp_id)
+        self._salary = salary
+
+    def get_classification(self) -> SalariedClassification:
+        return SalariedClassification(self._salary)
+
+    def get_schedule(self) -> MonthlySchedule:
+        return MonthlySchedule()
 
 
 class ChangeHourlyTransaction(ChangeClassificationTransaction):
