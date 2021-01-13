@@ -1,4 +1,4 @@
-from affiliation import Affiliation, UnionAffiliation
+from affiliation import Affiliation, NoAffiliation, UnionAffiliation
 from change_employee_transaction import ChangeEmployeeTransaction
 from employee import EmpId, Employee
 from payroll_database import g_payroll_database
@@ -30,3 +30,17 @@ class ChangeMemberTransaction(ChangeAffiliationTransaction):
 
     def get_affiliation(self) -> Affiliation:
         return UnionAffiliation(self._member_id, self._dues)
+
+
+class ChangeUnaffiliatedTransaction(ChangeAffiliationTransaction):
+    def __init__(self, emp_id):
+        ChangeAffiliationTransaction.__init__(self, emp_id)
+
+    def record_membership(self, e: Employee):
+        affiliation = e.get_affiliation()
+        if isinstance(affiliation, UnionAffiliation):
+            member_id = affiliation.get_member_id()
+            g_payroll_database.remove_union_member(member_id)
+
+    def get_affiliation(self) -> Affiliation:
+        return NoAffiliation()

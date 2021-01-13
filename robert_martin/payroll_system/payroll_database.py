@@ -22,6 +22,9 @@ class PayrollDatabase:
     def delete_employee(self, emp_id: EmpId):
         self._employees.pop(emp_id)
 
+    def remove_union_member(self, member_id: MemberId):
+        self._members.pop(member_id)
+
     def clear(self):
         self._employees.clear()
 

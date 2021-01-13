@@ -19,11 +19,18 @@ class Affiliation:
     pass
 
 
+class NoAffiliation(Affiliation):
+    pass
+
+
 class UnionAffiliation(Affiliation):
     def __init__(self, member_id: MemberId = None, dues=None):
         self._member_id = member_id
         self._dues = dues
         self._sc = None
+
+    def get_member_id(self):
+        return self._member_id
 
     def set_dues(self, dues):
         self._dues = dues
