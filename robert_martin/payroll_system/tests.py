@@ -267,16 +267,19 @@ class PayrollTest(unittest.TestCase):
         transaction = AddSalariedEmployee(
             emp_id, 'Bob', 'Home', salary=1000.00)
         transaction.execute()
+
         pay_date = date(2001, 11, 30)
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
+        self.validate_hourly_paycheck(transaction, emp_id, pay_date, 1000.00)
 
+    def validate_hourly_paycheck(self, transaction, emp_id, pay_date, pay):
         paycheck = transaction.get_paycheck(emp_id)
         self.assertEqual(pay_date, paycheck.get_pay_date())
-        self.assertEqual(1000.00, paycheck.get_gross_pay())
+        self.assertEqual(pay, paycheck.get_gross_pay())
         self.assertEqual('Hold', paycheck.get_field('Disposition'))
         self.assertEqual(0.0, paycheck.get_deductions())
-        self.assertEqual(1000.00, paycheck.get_net_pay())
+        self.assertEqual(pay, paycheck.get_net_pay())
 
     def test_pay_single_salaried_employee_on_wrong_date(self):
         emp_id = EmpId(1)
@@ -299,14 +302,6 @@ class PayrollTest(unittest.TestCase):
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
         self.validate_hourly_paycheck(transaction, emp_id, pay_date, 0.0)
-
-    def validate_hourly_paycheck(self, transaction, emp_id, pay_date, pay):
-        paycheck = transaction.get_paycheck(emp_id)
-        self.assertEqual(pay_date, paycheck.get_pay_date())
-        self.assertEqual(pay, paycheck.get_gross_pay())
-        self.assertEqual('Hold', paycheck.get_field('Disposition'))
-        self.assertEqual(0.0, paycheck.get_deductions())
-        self.assertEqual(pay, paycheck.get_net_pay())
 
 
 if __name__ == '__main__':
