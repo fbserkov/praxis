@@ -271,9 +271,9 @@ class PayrollTest(unittest.TestCase):
         pay_date = date(2001, 11, 30)
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(transaction, emp_id, pay_date, 1000.00)
+        self.validate_paycheck(transaction, emp_id, pay_date, 1000.00)
 
-    def validate_hourly_paycheck(self, transaction, emp_id, pay_date, pay):
+    def validate_paycheck(self, transaction, emp_id, pay_date, pay):
         paycheck = transaction.get_paycheck(emp_id)
         self.assertEqual(pay_date, paycheck.get_pay_date())
         self.assertEqual(pay, paycheck.get_gross_pay())
@@ -301,7 +301,7 @@ class PayrollTest(unittest.TestCase):
         pay_date = date(2001, 11, 9)  # Friday
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(transaction, emp_id, pay_date, 0.0)
+        self.validate_paycheck(transaction, emp_id, pay_date, 0.0)
 
     def test_pay_single_hourly_employee_one_time_cards(self):
         emp_id = EmpId(2)
@@ -314,8 +314,7 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(
-            transaction, emp_id, pay_date, 2.0 * 15.25)
+        self.validate_paycheck(transaction, emp_id, pay_date, 2.0 * 15.25)
 
     def test_pay_single_hourly_employee_overtime_one_time_cards(self):
         emp_id = EmpId(2)
@@ -328,7 +327,7 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(
+        self.validate_paycheck(
             transaction, emp_id, pay_date, (8 + 1.5) * 15.25)
 
     def test_pay_single_hourly_employee_one_wrong_date(self):
@@ -357,7 +356,7 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(
+        self.validate_paycheck(
             transaction, emp_id, pay_date, (2.0 + 5.0) * 15.25)
 
     def test_pay_single_hourly_employee_with_time_cards_spanning_two_pay_periods(self):
@@ -375,8 +374,18 @@ class PayrollTest(unittest.TestCase):
         transaction.execute()
         transaction = PaydayTransaction(pay_date)
         transaction.execute()
-        self.validate_hourly_paycheck(
-            transaction, emp_id, pay_date, 2.0 * 15.25)
+        self.validate_paycheck(transaction, emp_id, pay_date, 2.0 * 15.25)
+
+    def test_pay_single_commissioned_employee_no_sales_receipt(self):
+        emp_id = EmpId(3)
+        transaction = AddCommissionedEmployee(
+            emp_id, 'Lance', 'Home', salary=2500, commission_rate=3.2)
+        transaction.execute()
+
+        pay_date = date(2001, 11, 9)  # Friday
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.validate_paycheck(transaction, emp_id, pay_date, 2500)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ class ServiceCharge:
 
 
 class Affiliation:
-    def calculate_deductions(self, paycheck):
+    def calculate_deductions(self):
         return 0.0
 
 

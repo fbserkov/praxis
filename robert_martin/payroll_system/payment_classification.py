@@ -78,3 +78,6 @@ class CommissionedClassification(PaymentClassification):
         for sales_receipt in self._sales_receipt:
             if sales_receipt.get_date() == date:
                 return sales_receipt
+
+    def calculate_pay(self, paycheck: Paycheck):
+        return self._salary

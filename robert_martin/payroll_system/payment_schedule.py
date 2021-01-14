@@ -20,4 +20,8 @@ class WeeklySchedule(PaymentSchedule):
 
 
 class BiweeklySchedule(PaymentSchedule):
-    pass
+    def __init__(self):
+        self._is_second_friday = True
+
+    def is_pay_date(self, pay_date):
+        return pay_date.isoweekday() == 5 and self._is_second_friday

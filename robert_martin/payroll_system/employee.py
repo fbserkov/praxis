@@ -60,7 +60,7 @@ class Employee:
 
     def payday(self, paycheck):
         gross_pay = self._classification.calculate_pay(paycheck)
-        deductions = self._affiliation.calculate_deductions(paycheck)
+        deductions = self._affiliation.calculate_deductions()
         net_pay = gross_pay - deductions
         paycheck.set_gross_pay(gross_pay)
         paycheck.set_deductions(deductions)
