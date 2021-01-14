@@ -2,6 +2,7 @@ from datetime import timedelta
 from typing import List
 
 from paycheck import Paycheck
+from sales_receipt import SalesReceipt
 from timecard import Timecard
 
 
@@ -80,4 +81,14 @@ class CommissionedClassification(PaymentClassification):
                 return sales_receipt
 
     def calculate_pay(self, paycheck: Paycheck):
-        return self._salary
+        return self._salary + self.calculate_pay_from_sales_receipts()
+
+    def calculate_pay_from_sales_receipts(self):
+        total_pay_from_sales_receipts = 0
+        for sr in self._sales_receipt:
+            total_pay_from_sales_receipts += (
+                self.calculate_pay_for_sales_receipt(sr))
+        return total_pay_from_sales_receipts
+
+    def calculate_pay_for_sales_receipt(self, sr: SalesReceipt):
+        return sr.get_amount() * self._commission_rate / 100
