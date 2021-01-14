@@ -449,6 +449,26 @@ class PayrollTest(unittest.TestCase):
         self.validate_paycheck(
             transaction, emp_id, pay_date, 2500 + 1000 * 3.2 / 100)
 
+    def test_salaried_union_member_dues(self):
+        emp_id = EmpId(1)
+        transaction = AddSalariedEmployee(
+            emp_id, 'Bob', 'Home', salary=1000.00)
+        transaction.execute()
+        member_id = MemberId(7734)
+        transaction = ChangeMemberTransaction(emp_id, member_id, dues=9.42)
+        transaction.execute()
+
+        pay_date = date(2001, 11, 30)
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+
+        paycheck = transaction.get_paycheck(emp_id)
+        self.assertEqual(pay_date, paycheck.get_pay_date())
+        self.assertEqual(1000, paycheck.get_gross_pay())
+        self.assertEqual('Hold', paycheck.get_field('Disposition'))
+        self.assertEqual(5 * 9.42, paycheck.get_deductions())
+        self.assertEqual(1000 - 5 * 9.42, paycheck.get_net_pay())
+
 
 if __name__ == '__main__':
     unittest.main()

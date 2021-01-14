@@ -16,6 +16,10 @@ class MonthlySchedule(PaymentSchedule):
     def is_pay_date(pay_date: date):
         return pay_date.month != (pay_date + timedelta(1)).month
 
+    @staticmethod
+    def get_period_start_date(pay_date):
+        return pay_date - timedelta(30)
+
 
 class WeeklySchedule(PaymentSchedule):
     @staticmethod

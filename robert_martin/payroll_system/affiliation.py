@@ -1,4 +1,7 @@
+from datetime import timedelta
 from typing import NewType
+
+from paycheck import Paycheck
 
 MemberId = NewType('MemberId', int)
 
@@ -16,7 +19,7 @@ class ServiceCharge:
 
 
 class Affiliation:
-    def calculate_deductions(self):
+    def calculate_deductions(self, pc: Paycheck):
         return 0.0
 
 
@@ -45,3 +48,18 @@ class UnionAffiliation(Affiliation):
     def get_service_charge(self, date) -> ServiceCharge:
         if date == self._sc.get_date():
             return self._sc
+
+    def calculate_deductions(self, pc: Paycheck):
+        fridays = self._number_of_fridays_in_pay_period(
+            pc.get_period_start_date(), pc.get_period_end_date())
+        return self._dues * fridays
+
+    @staticmethod
+    def _number_of_fridays_in_pay_period(pay_period_start, pay_period_end):
+        fridays = 0
+        day = pay_period_start
+        while day <= pay_period_end:
+            if day.isoweekday() == 5:
+                fridays += 1
+            day += timedelta(1)
+        return fridays
