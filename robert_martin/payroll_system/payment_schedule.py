@@ -28,7 +28,7 @@ class WeeklySchedule(PaymentSchedule):
 
     @staticmethod
     def get_period_start_date(pay_date):
-        return pay_date - timedelta(7)
+        return pay_date - timedelta(6)
 
 
 class BiweeklySchedule(PaymentSchedule):

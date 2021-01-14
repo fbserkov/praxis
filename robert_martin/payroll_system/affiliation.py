@@ -52,7 +52,10 @@ class UnionAffiliation(Affiliation):
     def calculate_deductions(self, pc: Paycheck):
         fridays = self._number_of_fridays_in_pay_period(
             pc.get_period_start_date(), pc.get_period_end_date())
-        return self._dues * fridays
+        total_dues = self._dues * fridays
+        if self._sc:
+            total_dues += self._sc.get_amount()
+        return total_dues
 
     @staticmethod
     def _number_of_fridays_in_pay_period(pay_period_start, pay_period_end):
