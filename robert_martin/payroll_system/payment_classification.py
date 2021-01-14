@@ -38,18 +38,21 @@ class HourlyClassification(PaymentClassification):
                 return timecard
 
     def calculate_pay(self, paycheck: Paycheck):
-        return sum(
-            self._calculate_hours(tc.get_hours()) for tc in self._timecards
-            if self._is_in_pay_period(tc, paycheck.get_pay_date())
-        )
+        total_pay = 0
+        pay_period = paycheck.get_pay_date()
+        for tc in self._timecards:
+            if self.is_in_pay_period(tc, pay_period):
+                total_pay += self.calculate_pay_for_timecard(tc)
+        return total_pay
 
-    def _calculate_hours(self, hours):
-        if hours > 8:
-            return (8 + (hours - 8) * 1.5) * self._hourly_rate
-        return hours * self._hourly_rate
+    def calculate_pay_for_timecard(self, tc: Timecard):
+        hours = tc.get_hours()
+        overtime = max(0.0, hours - 8.0)
+        straight_time = hours - overtime
+        return (straight_time + overtime * 1.5) * self._hourly_rate
 
     @staticmethod
-    def _is_in_pay_period(tc: Timecard, pay_period):
+    def is_in_pay_period(tc: Timecard, pay_period):
         pay_period_end_date = pay_period
         pay_period_start_date = pay_period - timedelta(5)
         timecard_date = tc.get_date()
