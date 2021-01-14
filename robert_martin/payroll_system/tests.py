@@ -28,6 +28,9 @@ from timecard_transaction import TimecardTransaction
 
 
 class PayrollTest(unittest.TestCase):
+    def setUp(self) -> None:
+        g_payroll_database.clear()
+
     def test_add_salaried_employee(self):
         emp_id = EmpId(1)
         transaction = AddSalariedEmployee(
