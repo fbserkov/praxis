@@ -55,6 +55,9 @@ class Employee:
     def get_affiliation(self) -> Affiliation:
         return self._affiliation
 
+    def get_period_start_date(self, pay_date):
+        return self._schedule.get_period_start_date(pay_date)
+
     def is_pay_date(self, date):
         return self._schedule.is_pay_date(date)
 

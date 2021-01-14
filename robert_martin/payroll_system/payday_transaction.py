@@ -16,6 +16,9 @@ class PaydayTransaction:
         for emp_id in emp_ids:
             employee = g_payroll_database.get_employee(emp_id)
             if employee.is_pay_date(self._pay_date):
-                paycheck = Paycheck(self._pay_date)
+                paycheck = Paycheck(
+                    employee.get_period_start_date(self._pay_date),
+                    self._pay_date,
+                )
                 self._paychecks[emp_id] = paycheck
                 employee.payday(paycheck)

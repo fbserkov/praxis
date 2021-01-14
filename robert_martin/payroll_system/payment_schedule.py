@@ -6,6 +6,10 @@ class PaymentSchedule:
     def is_pay_date(pay_date):
         return False
 
+    @staticmethod
+    def get_period_start_date(pay_date):
+        return pay_date
+
 
 class MonthlySchedule(PaymentSchedule):
     @staticmethod
@@ -18,8 +22,16 @@ class WeeklySchedule(PaymentSchedule):
     def is_pay_date(pay_date):
         return pay_date.isoweekday() == 5
 
+    @staticmethod
+    def get_period_start_date(pay_date):
+        return pay_date - timedelta(7)
+
 
 class BiweeklySchedule(PaymentSchedule):
     @staticmethod
     def is_pay_date(pay_date):
         return not (pay_date - date(2001, 11, 9)).days % 14
+
+    @staticmethod
+    def get_period_start_date(pay_date):
+        return pay_date - timedelta(14)

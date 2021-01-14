@@ -1,5 +1,6 @@
 class Paycheck:
-    def __init__(self, pay_date):
+    def __init__(self, start_date, pay_date):
+        self._start_date = start_date
         self._pay_date = pay_date
         self._gross_pay = None
         self._deductions = None
@@ -13,6 +14,12 @@ class Paycheck:
 
     def set_net_pay(self, net_pay):
         self._net_pay = net_pay
+
+    def get_period_start_date(self):
+        return self._start_date
+
+    def get_period_end_date(self):
+        return self._pay_date
 
     def get_pay_date(self):
         return self._pay_date

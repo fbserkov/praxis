@@ -1,4 +1,3 @@
-from datetime import timedelta
 from typing import List
 
 from paycheck import Paycheck
@@ -9,6 +8,12 @@ from timecard import Timecard
 class PaymentClassification:
     def calculate_pay(self, paycheck):
         pass
+
+    @staticmethod
+    def is_in_pay_period(the_date, paycheck):
+        pay_period_end_date = paycheck.get_period_end_date()
+        pay_period_start_date = paycheck.get_period_start_date()
+        return pay_period_start_date < the_date <= pay_period_end_date
 
 
 class SalariedClassification(PaymentClassification):
@@ -40,9 +45,8 @@ class HourlyClassification(PaymentClassification):
 
     def calculate_pay(self, paycheck: Paycheck):
         total_pay = 0
-        pay_period = paycheck.get_pay_date()
         for tc in self._timecards:
-            if self.is_in_pay_period(tc, pay_period):
+            if self.is_in_pay_period(tc.get_date(), paycheck):
                 total_pay += self.calculate_pay_for_timecard(tc)
         return total_pay
 
@@ -51,13 +55,6 @@ class HourlyClassification(PaymentClassification):
         overtime = max(0.0, hours - 8.0)
         straight_time = hours - overtime
         return (straight_time + overtime * 1.5) * self._hourly_rate
-
-    @staticmethod
-    def is_in_pay_period(tc: Timecard, pay_period):
-        pay_period_end_date = pay_period
-        pay_period_start_date = pay_period - timedelta(5)
-        timecard_date = tc.get_date()
-        return pay_period_start_date <= timecard_date <= pay_period_end_date
 
 
 class CommissionedClassification(PaymentClassification):
@@ -85,19 +82,11 @@ class CommissionedClassification(PaymentClassification):
 
     def calculate_pay_from_sales_receipts(self, paycheck):
         total_pay_from_sales_receipts = 0
-        pay_period = paycheck.get_pay_date()
         for sr in self._sales_receipt:
-            if self.is_in_pay_period(sr, pay_period):
+            if self.is_in_pay_period(sr.get_date(), paycheck):
                 total_pay_from_sales_receipts += (
                     self.calculate_pay_for_sales_receipt(sr))
         return total_pay_from_sales_receipts
 
     def calculate_pay_for_sales_receipt(self, sr: SalesReceipt):
         return sr.get_amount() * self._commission_rate / 100
-
-    @staticmethod
-    def is_in_pay_period(sr: SalesReceipt, pay_period):
-        pay_period_end_date = pay_period
-        pay_period_start_date = pay_period - timedelta(14)
-        sales_receipt_date = sr.get_date()
-        return pay_period_start_date < sales_receipt_date <= pay_period_end_date
