@@ -81,14 +81,23 @@ class CommissionedClassification(PaymentClassification):
                 return sales_receipt
 
     def calculate_pay(self, paycheck: Paycheck):
-        return self._salary + self.calculate_pay_from_sales_receipts()
+        return self._salary + self.calculate_pay_from_sales_receipts(paycheck)
 
-    def calculate_pay_from_sales_receipts(self):
+    def calculate_pay_from_sales_receipts(self, paycheck):
         total_pay_from_sales_receipts = 0
+        pay_period = paycheck.get_pay_date()
         for sr in self._sales_receipt:
-            total_pay_from_sales_receipts += (
-                self.calculate_pay_for_sales_receipt(sr))
+            if self.is_in_pay_period(sr, pay_period):
+                total_pay_from_sales_receipts += (
+                    self.calculate_pay_for_sales_receipt(sr))
         return total_pay_from_sales_receipts
 
     def calculate_pay_for_sales_receipt(self, sr: SalesReceipt):
         return sr.get_amount() * self._commission_rate / 100
+
+    @staticmethod
+    def is_in_pay_period(sr: SalesReceipt, pay_period):
+        pay_period_end_date = pay_period
+        pay_period_start_date = pay_period - timedelta(14)
+        sales_receipt_date = sr.get_date()
+        return pay_period_start_date < sales_receipt_date <= pay_period_end_date

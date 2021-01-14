@@ -431,6 +431,24 @@ class PayrollTest(unittest.TestCase):
         self.validate_paycheck(
             transaction, emp_id, pay_date, 2500 + (1000 + 900) * 3.2 / 100)
 
+    def test_pay_single_commissioned_employee_with_sales_receipts_spanning_two_pay_periods(self):
+        emp_id = EmpId(3)
+        transaction = AddCommissionedEmployee(
+            emp_id, 'Lance', 'Home', salary=2500, commission_rate=3.2)
+        transaction.execute()
+        pay_date = date(2001, 11, 9)  # Friday
+        date_in_previous_pay_period = date(2001, 10, 26)
+
+        transaction = SalesReceiptTransaction(emp_id, pay_date, amount=1000)
+        transaction.execute()
+        transaction = SalesReceiptTransaction(
+            emp_id, date_in_previous_pay_period, amount=900)
+        transaction.execute()
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+        self.validate_paycheck(
+            transaction, emp_id, pay_date, 2500 + 1000 * 3.2 / 100)
+
 
 if __name__ == '__main__':
     unittest.main()
