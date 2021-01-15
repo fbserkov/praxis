@@ -34,5 +34,9 @@ class Paycheck:
         return self._net_pay
 
     @staticmethod
+    def is_between(start_date, the_date, end_date):
+        return start_date < the_date <= end_date
+
+    @staticmethod
     def get_field(_):
         return 'Hold'

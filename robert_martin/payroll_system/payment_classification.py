@@ -11,9 +11,10 @@ class PaymentClassification:
 
     @staticmethod
     def is_in_pay_period(the_date, paycheck):
-        pay_period_end_date = paycheck.get_period_end_date()
         pay_period_start_date = paycheck.get_period_start_date()
-        return pay_period_start_date < the_date <= pay_period_end_date
+        pay_period_end_date = paycheck.get_period_end_date()
+        return paycheck.is_between(
+            pay_period_start_date, the_date, pay_period_end_date)
 
 
 class SalariedClassification(PaymentClassification):

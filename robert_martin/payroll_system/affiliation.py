@@ -51,11 +51,13 @@ class UnionAffiliation(Affiliation):
                 return sc
 
     def calculate_deductions(self, pc: Paycheck):
-        fridays = self._number_of_fridays_in_pay_period(
-            pc.get_period_start_date(), pc.get_period_end_date())
+        start_date = pc.get_period_start_date()
+        end_date = pc.get_period_end_date()
+        fridays = self._number_of_fridays_in_pay_period(start_date, end_date)
         total_dues = self._dues * fridays
-        for sc in self._service_charges.values():
-            total_dues += sc.get_amount()
+        for a_date, sc in self._service_charges.items():
+            if pc.is_between(start_date, a_date, end_date):
+                total_dues += sc.get_amount()
         return total_dues
 
     @staticmethod

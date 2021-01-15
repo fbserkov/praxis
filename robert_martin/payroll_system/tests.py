@@ -497,6 +497,39 @@ class PayrollTest(unittest.TestCase):
         self.assertEqual(9.42 + 19.42, paycheck.get_deductions())
         self.assertEqual(8 * 15.24 - (9.42 + 19.42), paycheck.get_net_pay())
 
+    def test_service_charge_spanning_multiple_pay_periods(self):
+        emp_id = EmpId(1)
+        transaction = AddHourlyEmployee(
+            emp_id, 'Bill', 'Home', hourly_rate=15.24)
+        transaction.execute()
+        member_id = MemberId(7734)
+        transaction = ChangeMemberTransaction(emp_id, member_id, dues=9.42)
+        transaction.execute()
+
+        early_date = date(2001, 11, 2)  # previous Friday
+        pay_date = date(2001, 11, 9)
+        late_date = date(2001, 11, 16)  # next Friday
+        transaction = ServiceChargeTransaction(
+            member_id, pay_date, charge=19.42)
+        transaction.execute()
+        transaction = ServiceChargeTransaction(
+            member_id, early_date, charge=100)
+        transaction.execute()
+        transaction = ServiceChargeTransaction(
+            member_id, late_date, charge=200)
+        transaction.execute()
+        transaction = TimecardTransaction(emp_id, pay_date, hours=8.0)
+        transaction.execute()
+        transaction = PaydayTransaction(pay_date)
+        transaction.execute()
+
+        paycheck = transaction.get_paycheck(emp_id)
+        self.assertEqual(pay_date, paycheck.get_period_end_date())
+        self.assertEqual(8 * 15.24, paycheck.get_gross_pay())
+        self.assertEqual('Hold', paycheck.get_field('Disposition'))
+        self.assertEqual(9.42 + 19.42, paycheck.get_deductions())
+        self.assertEqual(8 * 15.24 - (9.42 + 19.42), paycheck.get_net_pay())
+
 
 if __name__ == '__main__':
     unittest.main()
