@@ -1,6 +1,7 @@
 from typing import NewType
 
 from affiliation import Affiliation
+from paycheck import Paycheck
 from payment_classification import PaymentClassification
 from payment_method import PaymentMethod
 from payment_schedule import PaymentSchedule
@@ -61,7 +62,7 @@ class Employee:
     def is_pay_date(self, date):
         return self._schedule.is_pay_date(date)
 
-    def payday(self, paycheck):
+    def payday(self, paycheck: Paycheck):
         gross_pay = self._classification.calculate_pay(paycheck)
         deductions = self._affiliation.calculate_deductions(paycheck)
         net_pay = gross_pay - deductions
