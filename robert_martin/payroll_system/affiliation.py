@@ -31,7 +31,7 @@ class UnionAffiliation(Affiliation):
     def __init__(self, member_id: MemberId = None, dues=None):
         self._member_id = member_id
         self._dues = dues
-        self._sc = None
+        self._service_charges = {}
 
     def get_member_id(self):
         return self._member_id
@@ -43,18 +43,19 @@ class UnionAffiliation(Affiliation):
         return self._dues
 
     def add_service_charge(self, date, charge):
-        self._sc = ServiceCharge(date, amount=charge)
+        self._service_charges[date] = ServiceCharge(date, amount=charge)
 
-    def get_service_charge(self, date) -> ServiceCharge:
-        if date == self._sc.get_date():
-            return self._sc
+    def get_service_charge(self, the_date) -> ServiceCharge:
+        for a_date, sc in self._service_charges.items():
+            if the_date == a_date:
+                return sc
 
     def calculate_deductions(self, pc: Paycheck):
         fridays = self._number_of_fridays_in_pay_period(
             pc.get_period_start_date(), pc.get_period_end_date())
         total_dues = self._dues * fridays
-        if self._sc:
-            total_dues += self._sc.get_amount()
+        for sc in self._service_charges.values():
+            total_dues += sc.get_amount()
         return total_dues
 
     @staticmethod
